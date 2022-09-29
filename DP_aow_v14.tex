@@ -1,0 +1,1583 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage{apacite}
+\bibliographystyle{apacite}
+\usepackage[utf8]{inputenc}
+\usepackage{enumitem}
+\usepackage{amsmath}
+\usepackage[capposition=top]{floatrow}
+\usepackage{wasysym}
+\usepackage[comma]{natbib}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usepackage{rotating}
+\usepackage{comment}
+
+\usepackage{subcaption}
+\usepackage[hyperfootnotes=false]{hyperref}
+\hypersetup{colorlinks, citecolor=[rgb]{0.7,0.1,0.1}, urlcolor=[rgb]{0.7,0.1,0.1}}
+\usepackage{setspace}
+\onehalfspacing
+\usepackage{adjustbox}
+\usepackage{lscape}
+\usepackage{booktabs}
+\usepackage{dcolumn, booktabs}
+\newcolumntype{d}[1]{D{.}{.}{#1}} 
+\newcolumntype{j}[1]{D{,}{,}{#1}} 
+\usepackage{multirow}
+\usepackage{array}
+\usepackage[flushleft]{threeparttable}
+\renewcommand{\arraystretch}{1.7}
+\newcolumntype{L}{>{\raggedleft\arraybackslash}m{3cm}}
+
+% allows for temporary adjustment of side margins
+\usepackage{chngpage}
+
+\makeatletter
+\newcommand\primitiveinput[1]
+{\@@input #1 }
+\makeatother
+
+
+% AEJ guidelines
+\onehalfspacing
+\usepackage[margin = 1.4in]{geometry}
+
+\title{Increasing the Effective Retirement Age:\\ Key Factors and Interaction Effects\thanks{We thank Jochem Zweerink for his help in the construction of the dataset used in the analyses. We are grateful to the editor Matthew Notowidigdo, three anonymous referees, Leon Bettendorf, Carole Bonnet, Monika Butler, Adriaan Kalwij, Wilbert van der Klaauw, Pierre Koning, Marcel Lever, Olga Malkova, Arthur van Soest, Stefan Staubli, Marianne Tenand and participants of the Netherlands Economists' Day 2019 in Amsterdam, the International Pension Workshop 2020 in Leiden and the IIPF 2020 in Reykjavik (online) for their valuable comments and suggestions. Remaining errors are our own. This research was partly funded by Netspar.}
+}
+
+\author{Simon Rabaté\thanks{CPB Netherlands Bureau for Economic Policy Analysis and Ined. Corresponding author: s.rabate@cpb.nl.  } \and Egbert Jongen\thanks{CPB Netherlands Bureau for Economic Policy Analysis, Leiden University and IZA.} \and Tilbe Atav\thanks{Erasmus University Rotterdam.} }
+
+\date{September 2022}
+
+\begin{document}
+	
+\maketitle
+\thispagestyle{empty}
+
+\begin{abstract}
+	
+\noindent \textbf{PM Simon: adjust, perhaps also the title.} We study the effects of the recent increase in the statutory retirement age (SRA) in the Netherlands, using RDD and rich administrative data on the universe of the Dutch population. We find large interaction effects with a preceding early retirement reform. The employment effect of the SRA reform is much larger for cohorts receiving less generous early retirement benefits. Indeed, the level of employment before the SRA, together with the retirement hazard at the SRA, is key to understanding the effects of retirement age reforms. Our results further point to a big role for automatic job termination in the Netherlands. 
+\newline
+\\
+\textbf{JEL codes}:  J14, J26 \newline
+\textbf{Keywords}: Statutory retirement age, employment, social insurance, bunching, Netherlands \newline
+\end{abstract}
+
+\clearpage
+\pagenumbering{arabic}
+
+\newpage
+
+\section{Introduction}
+
+% Motivation, policy environment and mechanical and behavioral effects
+The sustainability of public finances is a major concern in many countries, due to aging populations and lower fertility rates. %\footnote{And more recently due to the vast expansion of support programs for the economy following the COVID-19 pandemic, the energy crisis and the need to raise interest rates to curb inflation.} 
+To alleviate the financial pressure such developments exert on the pension system, many countries have implemented reforms to increase the effective retirement age. Most prominent are changes in the minimum eligibility age for early retirement and the age at which individuals become eligible to a full pension (statutory retirement age, SRA),
+%\footnote{It is also sometimes referred to as the normal retirement age (NRA) in the literature.}) 
+which are deemed effective levers to extend the working life of older workers. 
+
+The impact of the increase in the (early) retirement age on public finances depends crucially on how this affects labor market outcomes. On the one hand, next to the direct savings on retirement benefits, the government may benefit from additional tax receipts from continued employment beyond the old retirement age. On the other hand, the government may spend more on other types of social insurance like unemployment insurance (UI) and disability insurance (DI), which may act as 'alternative pathways' to retirement. In part, these additional government receipts and expenditures will be mechanical, as individuals simply remain in their pre-SRA labor market state longer \citep{staubli_does_2013,manoli_effects_2018,oguzoglu_et_al_2020,geyer_closing_2021}. But the reform may also change the behavior of individuals between the old and the new SRA, resulting in active substitution from e.g. employment to UI or DI, driving up the additional government expenditures. Furthermore, the reform may also change the behavior of individuals before the old SRA, resulting in so-called upstream or horizon effects \citep{hairault_distance_2010,jacobs_2010}, or after the new SRA, which we may call downstream effects.    
+Determining the empirical relevance of the mechanical and behavioral effects on labor market outcomes is therefore key to studying the overall effect of changes in the retirement age on public finances. 
+
+%In this paper, we show that a simple yet novel framework can reconcile much of the different findings in the empirical literature on retirement age reforms. We focus on SRA reforms, but a similar line of reasoning can be applied to ERA reforms. The effect mainly depends on how much the SRA is shaping retirement behavior: if a large share of the population retires before or after the SRA, increasing the SRA is not likely to have a strong impact on the average retirement age. The overall effect of the reform can then largely be predicted by the share of individuals retiring in the vicinity of the SRA. This bunching at the SRA can in turn be decomposed into two components: (i) the share of individuals still employed when they reach the SRA and (ii) the retirement hazard rate at the SRA. Two other mechanisms can also influence the effect of the reform. The effect can be smaller if individuals are not willing or able to delay retirement, which may result in substitution towards social insurance schemes. However, it can also be boosted if there are 'upstream' effects, where employment also increases at ages before the old SRA \citep{hairault_distance_2010}. Overall, the employment effect of an increase in the SRA then depends on the employment rate before the SRA, the hazard rate at the SRA and potential active substitution and upstream effects.
+
+%% Research question
+In this paper we consider the mechanical and behavioral effects of recent reforms in the SRA in the Netherlands, which led to step-wise increase in the SRA from 65 years in 2012 to 66 years and 4 months in 2019. We provide a comprehensive assessment of the different effects and also consider the underlying mechanisms that shape and shift the retirement behavior.
+%This is the most recent chapter of a series of reforms aiming at cutting old-age related spending, including a massive reduction in early retirement provision in the second pillar pensions. 
+
+%Methodology and data
+We leverage the sharp cohort-based shifts in the SRA in a regression discontinuity (RD) design, to present well-identified and comprehensive causal effects of the reform. To do so, we rely on administrative data on various types of income, wealth and job characteristics for the universe of the Dutch population for the period 2007--\textbf{2020}. We analyze the effect on a set of labor market outcomes, including retirement, employment and the use of different types of social insurance, and on the public expenditures and receipts related to these labor market outcomes. We consider the empirical relevance of mechanical and behavioral effects, by relating the estimated outcomes to the predictions of a simple mechanical model. We also study how the (local) treatment effects at a given age relative to the SRA translate into an a treatment effect on the (global) average retirement age. Furthermore, we consider how the mechanical model can be helpful in understanding the wide range of estimates in the quasi-experimental literature on the effects of changes in the (early) retirement age. Finally, by comparing bunching of retirement at the SRA for different subgroups in the population, we explore the relative importance of the following channels that potentially play a role in this: kinks in the budget constraint, credit constraints, the demand side and social norms.
+
+%Furthermore, as we observe subsequent jumps in the SRA, we can study how the effects interact with the changes in the early retirement (ER) scheme. We compare outcomes for earlier cohorts that were still eligible for the more generous ER scheme, and later cohorts that were eligible for a much less generous one. Because of the ER reform, the employment rate before the SRA was much higher for the later cohorts, which in turn resulted in much larger effects of the SRA reforms for later cohorts.  Finally, we study which mechanisms play a key role in the high level of bunching or retirement at the SRA in the Netherlands. 
+%By comparing outcomes for individuals in different sectors, for employees and self-employed and for individuals in households with relatively low and relatively high wealth levels, we can study which mechanisms appear to play an important role in the retirement and employment outcomes close to the SRA.
+
+% Main findings 
+Our main findings are as follows. First, we find substantial effects on the employment rate (+21pp) and substantial effects on the participation in social insurance (+22pp, DI in particular), between the old and the new SRA. Furthermore, despite substantial additional costs on social insurance, the savings on retirement benefits and the additional tax receipts on labor and profit income lead to a substantial net gain for the government of about 80 million euro per month between the old and the new SRA. Second, we find no evidence of upstream effects before the old SRA or downstream effects after the new SRA, and substitution towards social insurance between the old and new SRA is almost completely mechanical. Indeed, a simple mechanical model where we extrapolate labor market outcomes between the old and new SRA from observations before and after, predicts the estimated treatment effects very well. Converting the local effect on retirement to an effect on the average retirement age, we find that per month increase in the SRA the average retirement age increases by about .2 months. We further show that the mechanical model is also helpful in understanding the smaller effects for cohorts that were born before 1950, many of which could still use the generous early retirement scheme, resulting in lower pre-SRA employment rates than cohorts born later. The mechanical model is also consistent with the typical findings in the quasi-experimental literature on (early) retirement reforms, and we show that the pre-SRA employment rate and the hazard rate into retirement at the retirement age are key to understanding the different estimates for different contexts.  
+% PM SR: Not essential here
+%As a result, we find that the SRA reform increased the average retirement age by 0.11--0.12 months per month increase in the SRA for the earlier cohorts, whereas the average retirement age increased by 0.20--0.23 months per month increase in the SRA for the later cohorts. 
+Third, regarding the underlying mechanisms that determine the bunching into retirement at the SRA in the Netherlands, we find three times as much bunching for employees when compared to self-employed. This is consistent with an important role for automatic job termination and the end of employment protection in the Netherlands. We also find that bunching is higher in sectors that have relatively steep wage profiles and in sectors that were hit particularly hard by the Great Recession, again consistent with a role for the demand side in shaping retirement patterns. We further find that the bunching of self-employed is still substantial, suggesting that social norms also play an important role next to demand side factors. Furthermore, we find slightly higher bunching for individuals with relatively low wealth, consistent with some role for credit constraints. Finally, we observe similar bunching for sectors with different second-pillar pension incentives, which suggests a minor role for kinks in the budget constraint in the observed bunching in the Netherlands.
+
+%% Literature and contribution 1: reform evaluation
+Our analysis relates to the rich body of literature analyzing the effects of reforms of the early retirement age (ERA), the normal retirement age (NRA) and the SRA. 
+%PM I do not understand the point of the following sentence: As pension claiming at the SRA in the Netherlands is universal and automatic, with a fixed amount that is unrelated to labor supply decisions, it shares characteristics with both types of retirement ages. 
+Evaluations of shifts in the ERA, pioneered by \cite{staubli_does_2013} for Austria,\footnote{Other studies include \cite{manoli_effects_2018} for Austria, \cite{atalay_impact_2015} and \cite{oguzoglu_et_al_2020} for Australia, \cite{rabate_employment_2019} for France, \cite{geyer_closing_2021} and \cite{seibold2019reference} for Germany and \cite{cribb2016signals} for the UK.} find strong effects on retirement and employment, as well as important (though mostly passive)  substitution effects towards other social insurance schemes. Our analysis also relates to studies that consider changes in the SRA on the average retirement age, pioneered by \cite{mastrobuoni_labor_2009} for the US.\footnote{See also \cite{manoli_effects_2018} for Austria and \cite{lalive2019raising} for Switzerland.} These studies also show that the effects are largely driven by shifts in the bunching of retirement at the NRA age, and consider the underlying mechanisms.\footnote{See  \cite{behaghel_framing_2012}, \cite{Brown2013}, \cite{lalive2019raising} and \cite{seibold2019reference}.} 
+
+% Contributions
+
+%However, estimates of the employment effect of such reforms vary widely in the literature, ranging from 6.3 percentage points in \cite{cribb2016signals} to 20.9 percentage points in \cite{rabate_employment_2019}.
+
+Aside from providing a clean evaluation for the Dutch context\footnote{This recent reform has not been studied extensively before, though a preliminary differences-in-differences analysis of the employment effects using the Labor Force Survey for the first cohorts affected by the reform can be found in \cite{de_vos_social_2019}. Note that we also contribute to the literature on the ERA reform in the Netherlands in 2006, see appendix \ref{appendix_era}.}, our paper makes the following contributions to this literature.
+%Literature and contribution 1: Simple mechanical model explains the differences in the literature
+First, we show that a simple mechanical model predicts the estimated treatment effects for the effects on the different labor market states very well. We also show that the simple mechanical model is also informative about the differences we find for different birth cohorts in the Netherlands, where the effects of shifts in the SRA are much larger for cohorts that faced less generous ER schemes, because more individuals remain in the labor force until the SRA. Furthermore, With the help of an overview of related quasi-experimental studies on (early) retirement reforms, we find that the mechanical model is also very helpful in understanding the wide range of estimates in different contexts, where the pre-ERA or pre-SRA employment rate and the hazard rate into (early) retirement at the ERA or SRA are the key determinants of the treatment effects. As most individuals continue in the state they were in before the (early) retirement age, the mechanical model also emphasizes the important role of other policies that affect the pre-SRA employment rate, like early retirement schemes but also the generosity and entry conditions of UI and DI. Higher pre-retirement employment rates increase the effectiveness of shifts in the SRA.
+
+%we uncover important interaction effects between the generosity of the ERA and SRA. The sharp cohort-based differential shifts in the ERA and the SRA allows for a clean analysis of this interaction effect, comparing the RD estimates of the earlier cohorts that were still eligible to the generous ERA provision, and the later cohorts that were not. Our results show that from the perspective of employment and public finances, increasing the ERA generates additional employment and budgetary gains when the SRA is shifted upwards. 
+%This interaction effect also highlights a third element, that differences in employment (and retirement) effects across studies in different countries are largely driven by differences in employment (and retirement) rates just before the SRA. We establish this point with an extensive overview of existing studies on ERA and SRA reforms. 
+
+% Literature and contribution 2: Tie together local retirement studies and global average retirement age studies
+Second, we tie together the literature that considers the local effect of ERA and SRA reforms on retirement and employment between the old and the new ERA and SRA respectively \citep{staubli_does_2013,atalay_impact_2015,cribb2016signals,rabate_employment_2019,geyer_closing_2021} with the literature that considers the effect on the average retirement age, also including potential upstream and downstream effects  \citep{mastrobuoni_labor_2009,manoli_effects_2018,lalive2019raising}. Specifically, we formally show how to use the local RD estimates to calculate the effect on the average retirement age. This approach could easily be implemented for other reforms in other countries. 
+
+% Literature and contribution 3: mechanisms behind bunching at SRA
+%Along with the initial employment rate, the other essential determinant of the magnitude of SRA reforms is the retirement hazard rate at these ages. The product of these two numbers -- the pre-SRA employment rate and hazard rate into retirement -- determines the amount of bunching at the SRA, which in turns directly determines the employment effect of the reform in the absence of active substitution and upstream effects. 
+Finally, our paper contributes to the literature that considers the mechanisms that cause bunching at key ages of the pension system, an old puzzle in the literature on retirement patterns \citep{lumsdaine1996retirement}. 
+We find that employees are three times more likely to bunch at the SRA than the self-employed. We argue that this is closely related to the relatively strict employment protection and widespread mandatory retirement at the SRA in the Netherlands. 
+This points towards an important role of the employer side in bunching at the SRA, a determinant largely overlooked in the literature, except for \cite{rabate2019can} for the French case. Our findings that the hazard rate is higher for individuals working in sectors with relatively steep wage profiles, and in sectors that were hit particularly hard during the Great Recession, also points to a role for the demand side in shaping retirement patterns. Although bunching at the SRA is much smaller for the self-employed, it is still substantial. This is in line with social norms and reference-dependent preferences playing an important role in the bunching of retirement at the SRA, consistent with the findings of \cite{behaghel_framing_2012}, \cite{lalive2019raising} and \cite{seibold2019reference}. 
+%These papers however depict reference-dependent preferences with loss aversion as the main driver of bunching at the SRA, whereas in this case norms effects are more likely. 
+Using administrative data on household wealth, we find that bunching is somewhat larger for individuals in the lowest quartile of household wealth than for individuals in the highest quartile of household wealth. This is consistent with some role for liquidity constraints in the bunching into retirement at the SRA. This contrasts with the findings of \cite{cribb2016signals}, who do not find that differences by wealth level for the effect of the increase in the ERA in the UK, using data on housing wealth (which is however typically less liquid than other forms of wealth).  
+Finally, we find hardly any differences between employees in different sectors, that face different second-pillar pension incentives around the SRA. This suggest that kinks in the budget constraint at the SRA arising from differences in sector-specific second-pillar incentives play only a limited role in bunching at the SRA. This is in line with the results found by \cite{behaghel_framing_2012} and \cite{seibold2019reference}, who show that financial incentives are not a major determinant of bunching at the focal ages of the pension system, and \cite{Brown2013} and \cite{manoli2016nonparametric} who find small elasticities of the retirement age to financial incentives. 
+
+% Outline
+The outline of the paper is as follows. Section 2 gives the institutional context, the SRA reforms and reforms in ER and social insurance that may interact with the SRA reforms. This section also presents the simple mechanical model. Section 3 outlines the empirical methodology and datasets used. Section 4 presents graphical evidence on the effects of the reforms, regression results and robustness checks. Section 5 unifies the related literature in our framework and considers the role of different mechanisms in bunching at the SRA. Section 6 concludes. Additional results are given in an appendix, an online appendix contains supplementary material.
+
+\section{Institutional background and potential reform effects}\label{institutions}
+
+\subsection{The pension system and reforms}
+
+\paragraph{The Dutch pension system} 
+The Dutch pension system consists of three pillars, which together allow workers to accumulate pension rights in the order of 70\% of their average gross wage for retirement \citep{knoef_et_al_2017}. 
+
+The first pillar consists of pay-as-you-go old age pension benefits (AOW, \textit{Algemene Ouderdomswet}). Individuals accumulate 2 percent of the full first pillar pension per year of residence in the Netherlands (up to a maximum of 100\% of the full benefit). The benefits are linked to the social minimum and also depend on partnership status (a retired single person gets 70\% of the social minimum, a retired couple gets 100\% of the social minimum). Individuals start receiving the first pillar pension once they have reached their birth-cohort specific `AOW age' or SRA. 
+Individuals cannot bring any first pillar pension benefits forward when they retire earlier. Furthermore, for most employees there is mandatory retirement at the SRA, employment contracts end by law and if an individual worker wants to continue to work the employer and the worker have to draw up a new contract.\footnote{According to the \citet[][p. 94]{oecd_2014}, 92\% of open-ended labor contracts in the Netherlands end when the SRA is reached.} Also, beyond the SRA individuals are no longer entitled to unemployment insurance benefits or disability insurance benefits.
+
+The second pillar consists of firm- and sector-specific 
+funded pension schemes. The benefits from the second pillar supplement the first pillar benefits. Pension savings in the second pillar depend on an individual's wage income and the pension arrangement that is provided by the firm or sector. Employees and employers pay monthly premiums to the pension fund of the respective firm or sector. 
+%ModifSR_22/09These premiums are paid over a certain income threshold and exempt from income taxation up to a maximum income threshold (EUR 114,866 in 2022), and there is no wealth tax on second pillar pension savings. The second pillar pension benefits are indexed to average wages, although indexation may be stalled, or benefits may even be reduced, when the assets of the pension fund drops below a certain percentage of its projected future obligations.
+Individuals can decide to retire before (or after) the SRA, and bring part of the second pillar pension benefits forward, with an actuarial fair reduction (increase) in the monthly benefits \citep{de_vos_social_2019}.
+
+The third pillar consists of individual savings for retirement. Individuals can accumulate 1.875\% of their average wage income for the expected retirement period per year tax free, via earmarked personal savings or life insurance schemes. Over a working life of 40 years this amounts to 75\% of the average wage income. 
+
+\cite{knoef_et_al_2017} calculate replacement rates for a representative sample of the Dutch population, combining data on first, second and third pillar pension in the Income Panel dataset of Statistics Netherlands. The median replacement rate of expected retirement income from first and second pillar pensions for individuals 60--65 years of age when they turn 67 is 68 percent.%\footnote{They calculate an annuity based on all income and assets projected to be available to the individual at the age of 67, and divide this by gross primary income  observed at the age the individual is observed.} 
+39 percentage points come from the first pillar and 29 percentage points come from the second pillar. Adding income from third pillar pension savings and other assets (including housing wealth), raises the median replacement rate to 82 percent.
+%\footnote{The median net replacement rate is 100 percent, as retired individuals pay less taxes than working age individuals at the same gross income level.} 
+%There is substantial variation in the replacement rate, ranging from 62 percent at the 25th percentile of the distribution to 106 percent at the 75th percentile of the distribution \citep[Table 4]{knoef_et_al_2017}. The replacement rate is higher for individuals with a relatively low household income, and for employees when compared to self-employed \citep[Table 11]{knoef_et_al_2017}.
+
+\begin{figure}[!t]
+\caption{Reforms in the SRA in the Netherlands}
+\label{nra_reform}
+	\centering
+	\includegraphics[scale = 0.6]{figures/schedule.pdf}
+ 	\begin{minipage}{15cm}%
+  \footnotesize
+	\textsc{Notes:}  This figure presents the evolution of the SRA implemented by the 2011 and 2012 reforms. SRA increases gradually based on the date of birth of individuals. The initial pace of the increase decided in 2011 (dashed grey line) was accelerated in 2012 as depicted in the figure.
+	\end{minipage}%
+\end{figure}
+
+\paragraph{Pension reforms}
+
+At the introduction of the first pillar pension in the Netherlands in 1957, the SRA was set at 65. This continued to be the SRA until 2012. In 2011, faced with public finances that were no longer sustainable in the long run, the Dutch government adopted a reform package that included an increase in the SRA from 2013 onwards. The dashed line in Figure \ref{nra_reform} shows the planned increase in the SRA for the different birth cohorts of the reform announced in 2011. In 2012 this reform was amended to allow the SRA to increase at a faster pace from 2015 onward, the solid line in Figure \ref{nra_reform}. These reforms in the SRA are the focus of our analysis. 
+
+\begin{table}[!t] 
+\caption{Overview of related reforms}
+\vspace{3mm}
+\label{related_reforms}
+\centering
+\scalebox{0.75}{
+\footnotesize
+\begin{tabular}{lllll} 
+	\toprule
+	Year    & First pillar & Second pillar and & Unemployment insurance & Disability insurance \\
+	&                 & early retirement  & & \\
+	\hline
+	\\
+	2006    && ER tax exemptions abolished, & Reduction of max. & Stricter distinction  \\
+	&& Life Course Saving Scheme & benefit duration & between partially, fully \\
+	&& introduced & from 60 to 38 months & and permanently disabled\\
+	2008    &&&& Experience rating abolished\\
+	2009    && Deferred Pension Bonus &&\\
+	&& introduced &&\\
+	2012    && Life Course Saving Scheme &&\\
+	&& abolished &&\\
+	2013    & Gradual increase & Deferred Pension Bonus & &\\
+	& SRA & becomes Workbonus & &\\
+	2015    & Accelerated gradual & Phase out of Workbonus, & \\
+	& increase SRA & reduction in tax & \\
+	& & favored savings & \\
+	2016    &&& Gradual shortening &\\ 
+	&&& of max. benefit duration &\\ 			
+	&&& from 38 to 24 months &\\
+	\bottomrule
+	\multicolumn{5}{l}{\small \textit{Source}: \cite{de_vos_social_2019} appended.}
+\end{tabular}}
+\end{table}
+
+There are a number of reforms in early retirement schemes and the second pillar pension system that are important for our analysis of the SRA reforms (see Table \ref{related_reforms}). First, in 2006 there was a major reform of the early retirement schemes.
+%\footnote{Formally known as the \textit{Wet aanpassing fiscale behandeling VUT/prepensioen en introductie levensloopregeling} (\textit{Wet VPL}, Law adjusting the fiscal treatment of early retirement/pre-pension and introducing the life course savings scheme).} 
+The reform package resulted in lower early retirement benefits and early retirement benefits that were more actuarially fair for cohorts born after December 1949. Early retirement benefits for cohorts before January 1950 were unaffected.
+%ModifSR_22/09: Already in the appendix !\footnote{In the same reform, the government also introduced the \textit{Levensloopregeling} (Life Course Savings Scheme), which allows for tax-free saving up to 12\% of annual earnings, which can be used to retire early (or to take leave for raising children or a sabbatical). Individuals could use this scheme to partly offset the reduction in early retirement benefits. However, all cohorts could participate in this scheme. Though cohorts born in 1950--1954 were allowed to save more than 12\% into this scheme (up to a maximum of 210\% of annual earnings for all cohorts).} 
+Financial incentives to postpone early retirement increased substantially for cohorts born after December 1949. This reform substantially increased employment rates before the SRA for cohorts born after 1949, see \cite{lindeboom_montizaan_2020} and online appendix \ref{appendix_era}, where we discuss this reform in more detail and provide new evidence on its effects and its interaction with the SRA reforms. %Indeed, below we will show that this also 'mechanically' leads to substantially higher employment effects of the SRA reforms for cohorts born after 1949.
+Second, in 2012 the \textit{Doorwerkbonus} (Deferred Pension Bonus) was introduced. This was an age-dependent tax credit for working individuals in the age range 62-67. The tax credit was particularly high for individuals 63 and 64 (up to 4,600 euro). The Deferred Pension Bonus was reformed somewhat in 2013, becoming the \textit{Werkbonus} (Workbonus), but was then phased out between 2015 and 2018. We expect that this reform hardly affects our results, since it mostly targets individuals a few years before the SRA, the available evidence suggests the effect on this group was limited \citep{CPB_2020_AOW}, and control and treatment groups in our RDD analysis of the SRA are affected in very similar ways by this reform. 
+Third and lastly, there was a reduction in the maximum accrual rate of tax favored savings for second pillar pensions  in 2015 ('Witteveenkader'). Tax favored savings were restricted to earnings up to 100 thousand euro. This may have affected second pillar savings and total wealth accumulation. However, wealth effects on employment and retirement are generally found to be small \cite[see e.g.][]{van_erp_non-financial_2014} and the control and treatment groups in our RDD analysis of the SRA are going to be affected in very similar ways by this reform.
+
+\paragraph{Alternative pathways}
+
+Individuals can also exit the labor force before the SRA using so-called alternative pathways, most importantly unemployment insurance (UI) and disability insurance (DI).\footnote{See \cite{cpb_2020_SZ} for an overview of the system of social insurance in the Netherlands.} 
+A change in the SRA may lead to increased substitution towards other social insurance programs.
+
+Unemployed individuals are entitled to UI if they did not quit their job and worked at least 26 weeks in the last 36 weeks of employment. The individual receives a benefit that is based on previous wage earnings. The replacement rate is 75 percent in the first two months, after which it drops to 70 percent for the remainder of the entitlement to UI. The minimal duration of the UI benefits is three months. The maximum duration of UI benefits was cut from 5 years to 3 years and 2 months in 2006, and over the years 2016 to 2019 it was gradually reduced from 3 years and 2 months to 2 years. The reduction in the maximum duration of UI benefits will reduce the share of individuals in UI and is also likely to increase employment.\footnote{See \cite{groot_van_der_klaauw_2019} for an analysis of the reduction in the maximum UI duration from 5 years to 3 years and 2 months.} The most important reform for our analysis is the reduction from 3 years and 2 months to 2 years. Since this reform was gradual (spread out over the years 2016-2019), and affects our treatment and control groups in our SRA analysis in a very similar way, we expect this reform to have a limited effect on our estimates of the SRA reforms.
+
+Individuals may also exit the labour force via DI. An individual is eligible for DI of 75\% of the previous wage when he or she is fully and permanently disabled. When the individual is partially and/or temporarily disabled, benefits are less generous and depend on the previous wage, number of weeks worked before, the current wage (if applicable) and the `remaining earnings capability'  of the individual. The last major reform of disability insurance was in 2006, when the system became much more strict, as a distinction was made between fully and permanently disabled persons and partially and/or temporarily disabled persons. This reform led to a reduction in the inflow into DI \citep[see e.g.][]{koning_lindeboom_2015}. However, since our treatment and control groups in our SRA analysis will be affected in a very similar way by this reform, we do not expect this reform to affect the results for the SRA reform, apart from starting from a lower level of DI and a higher level of employment. Another reform in 2008 abolished experience rating in disability insurance for large firms (individual employers' premiums for disability insurance would increase with the number of workers that entered DI from a given employer). It is likely to have increased the inflow into DI (and reduced the outflow of DI), as suggested by the analysis of \cite{groot_koning_2016}. However, this reform again affects our treatment and control groups in our SRA analysis in almost the same way, and we expect only a level effect on the employment rate before the SRA. 
+
+\subsection{Mechanical and behavioral effects of the SRA reforms}\label{mechanical_model}
+
+When considering the effects of the reforms, in the analysis below we will compare the estimated treatment effects with the treatment effects predicted by a simple 'mechanical' model. Specifically, in the mechanical model we predict individuals to simply remain longer in the state they were in before the old SRA and there are no treatment effects before the old SRA or after the new SRA. The actual treatment effects may differ from these mechanical effects due to behavioral responses. This is illustrated below. 
+
+Figure \ref{fig_mechanical} illustrates the hypothetical predictions of the mechanical model for the employment rate, which typically plays a central role in the analysis of shifts in the (early) retirement age, and how it relates to a set of hypothetical estimated treatment estimates which may include upstream (or horizon) effects before the old SRA of the control cohorts, downstream effects after the new SRA of the treatment cohorts, and active substitution effects between the old and the new SRA. We consider the hypothetical outcomes for two cohorts born in 1951. The control cohort is born in January 1951 and has an SRA of 65 years and 6 months, and the treatment cohort is born in December 1951 and has an SRA of 65 years and 9 months. Panel (a) shows a series of hypothetical outcomes for the employment rate for each cohort. The solid black line is the observed employment rate for the control cohort born in January 1951, where we see a decline up to the SRA (due to e.g. deteriorating health conditions), then a steep drop off at the SRA, and a more gradual decline after the SRA. The dashed black line gives the counterfactual employment rate profile for the cohort born in December 1951 if they would have had the same SRA as the cohort from January 1951, with a constant cohort effect before the old SRA and after the old SRA, with the cohort effect being smaller after the SRA than before the SRA (consistent with the descriptive statistics in Section 3 below).
+
+\begin{figure}[!t]
+%	\thisfloatpagestyle{empty}
+	\caption{Hypothetical effects of the reform}
+	\label{fig_mechanical}
+	\begin{center}
+		\subfloat [Outcomes]{\hspace{-1.5cm}\includegraphics[width=0.6\textwidth]{figures/Figure_decomposition_left.pdf}\hspace{0cm}}
+\subfloat [Treatment effects]{\includegraphics[width=0.6\textwidth]{figures/Figure_decomposition_right.pdf}}
+	\end{center}
+\end{figure}
+
+Next, in panel (a) we also have two hypothetical employment rate profiles for the cohort born in December 1951 under the new SRA: i) mechanical (dashed green lines) and ii) observed (dashed red lines). The corresponding mechanical and observed treatment effects are given in panel (b). In the mechanical profile, both cohorts move in parallel before the old SRA and after the new SRA -- no upstream or downstream effects -- and between the old and the new SRA individuals (on average) simply remain employed apart from an increasing share of individuals exiting employment (on net) due to e.g. deteriorating health conditions.\footnote{To determine the mechanical treatment effect we need to construct the employment rate profiles rate between the old and the new SRA for the treatment cohort, both for the new SRA and under the counterfactual old SRA. For the employment profile under the new SRA, we can extrapolate the employment rate for the treated cohorts up to 3 months after the old SRA, using the observations before the old SRA. Mutatis mutandis, we can use the observations after the new SRA to extrapolate the employment rate under the counterfactual backwards up to the old SRA. In the special case that the cohort and age effects are the same before and after the SRA, the treatment effect between the old SRA and new SRA for each month is simply the drop in the employment rate of the control group at the old SRA.} 
+
+The profile we actually observe may deviate from this simple mechanical model, as illustrated in Figure \ref{fig_mechanical}. The hypothetical case shown here has positive upstream and downstream effects, where employment rises in the periods before the old SRA age and also remains higher for some periods after the new SRA age. These may result from a wealth effect following the reduction in pension wealth \citep{gustman_steinmeijer_1986,hairault_distance_2010,van_erp_non-financial_2014} and/or more investment in human capital due to longer working lives \citep{jacobs_2010}. 
+%In addition, the change in wealth may also affect the savings behavior of individuals before or after the SRA, which we will also consider in the empirical analyses below. %ModifSR_22/09(in months)\footnote{Admittedly, these effects may be relatively small in our context, where we consider cohorts that differ only 3 months in terms of the SRA.} 
+In between the old and the new SRA age the employment rate may actually be lower than predicted by the mechanical model, because individuals actively move from employment to alternative pathways to retirement like UI or DI, resulting in lower treatment effects between the old and new SRA, as illustrated in Figure \ref{fig_mechanical}.         
+
+\section{Data and empirical strategy}
+
+\subsection{Data and descriptive statistics}
+
+We use administrative data on the universe of the Dutch elderly population for the period 2007--2020.\footnote{The datasets we use are linked and remotely accessed through a secured environment provided by Statistics Netherlands. In Section \ref{online_appendix_data} in the online appendix we present a detailed list of the datasets used.} We construct a monthly panel for the whole population between ages 57 and 67 years old, where we focus on cohorts born between January 1947 and December 1953. We have approximately 1.4 million individuals in our sample. 
+%We use information on individual characteristics -- such as migration background, income and wealth -- as well as firm level information (sector).
+Our main outcome variables are the different states individuals can be in on and off the labor market. Specifically, individuals are classified according to their main source of personal income, e.g. wage income (employees), profit income (self-employed), disability insurance benefits, unemployment insurance benefits, welfare benefits, pension benefits, other benefits or no income (typically women in couples). Demographic  variables include month of birth (to select individuals into treatment and control groups), gender (male/female), migration background (with/without) and household position (single/couple). Furthermore, we use information on sector of employment (public/private) for the individual at age 60.
+
+\begin{figure}[p]
+	\begin{adjustwidth}{-1in}{-1in}	
+\caption{Shares in different labor market states, by age and SRA cohorts}
+\label{workstate}
+\centering
+\includegraphics[scale = 0.7]{figures/evo_workstate_all.pdf}
+\end{adjustwidth}
+\scriptsize
+	\begin{minipage}{15cm}%
+		\textsc{Notes:}  This Figure presents the average share of the population in different workstates, by age and SRA-cohort. 
+	\end{minipage}%
+\end{figure}
+
+Figure \ref{workstate} presents the share of the population in different labor market states at different ages, for SRA-cohorts impacted by the gradual increase from 65 to 66 and 4 months. We observe the following patterns. First, the share of employed individuals decreases progressively over the age profile, until the SRA is reached and employment drops close to zero. Retirement follows a roughly similar but upward-sloping pattern. The other labor market states (generally) exhibit a flat profile (slightly increasing for unemployment), and drop to zero beyond the SRA, which is a mechanical effect of the first-pillar pension being automatically claimed and replacing all other existing benefits. %\footnote{With the exception of welfare benefits for some individuals that have not lived for 50 years in the Netherlands, and do not receive the full first-pillar pension.} 
+Second, we observe a progressive increase of the employment rate over cohorts, with a large jump in the `middle' of the cohorts. The former evolution can be attributed to the progressive increase in education and labor force participation of women \citep{CPB_2018}. The second one is the consequence of the 2006 second pillar reform of early retirement, which had a strong impact of the average retirement age (see \cite{lindeboom_montizaan_2020} and appendix \ref{appendix_era}). Lastly, we also observe a clear effect of the reform, as the patterns observed at the SRA (increase in retirement, drop in other outcomes) appears to shift to the right with the SRA of each cohort. This can be considered direct evidence of a causal effect of the SRA change on employment and retirement profiles. 
+
+\subsection{Empirical strategy}\label{sec_strategy}
+
+To measure the causal effect of the reform over employment and other outcomes, we take advantage of the cohort-based implementation of the reform to implement a regression discontinuity (RD) approach, as in \cite{geyer_closing_2021}. %Intuitively, we will compare the labor market outcomes of individuals born around the SRA discontinuities, which are likely to be very similar in every dimension except for the SRA they face. Formally, we will 
+We estimate models of the following form: 
+
+\begin{equation}
+	\label{eq_RD_gen}
+	y_{i} = \alpha_j  + \beta_{j}  T_{i} + \gamma_{j} f(Z_{i} - c_j)  + \delta_j f(Z_{i} - c_j) T_{i} + \eta X_{i} + \epsilon_{i},
+\end{equation}
+
+\noindent with $y$ a given labor market outcome of individual $i$, and $j$ a given discontinuous increase in the SRA generated by the reform. $Z_{i}$ is the month of birth of the individual and $c_j$ the cutoff point for increase $j$, the first cohort impacted by the reform. $f(Z_{i}-c_j)$ is the running variable, and represents the distance in months between the month of birth of individual $i$ to the cutoff that applies to the individuals that are part of the RD analysis for $j$. This distance variable takes on value zero at the cutoff. For values of the distance variable greater than or equal to zero, the treatment indicator $T_{i}$ takes on value 1, indicating the treated individuals. Lastly, $X_{i}$ is a vector of individual level control variables, and the $\epsilon_{i}$ indicates the error term. 
+In the empirical analyses, we sometimes use time in-varying variables as $y$ (e.g retirement age), but in our main specification we estimation the effect of the reform on labor force status separately for each monthly age $t$, for a given cutoff $j$.
+\begin{equation}
+	\label{eq_RD_age}
+	y_{itj} = \alpha_{jt}  + \beta_{jt}  T_{i} + \gamma_{jt} f(Z_{i} - c_j)  + \delta_{jt} f(Z_{i} - c_j) T_{i} + \eta X_{it} %+ \epsilon_{it}
+\end{equation}
+With $t$ expressed as the distance to the previous SRA, e.g equal to 0 when individual is aged 65.5 when considering the SRA increase form 65.5 to 65.75. 
+We expect the $\beta_{j}$ to be positive for employment and negative for retirement at the ages impacted by the reform (e.g at 0, 1 and 2 for a three month increase in the SRA). Other ages should not exhibit any discontinuity when there are no upstream of downstream effects. We estimate equation (\ref{eq_RD_gen}), using a second-degree polynomial for the $f()$ functions. For each cutoff $c$, we select all the observations with an the corresponding old SRA (resp. new SRA) in the control (resp. treatment) group, and only them. We present alternative specifications for the bandwidth in the robustness tests in subsection \ref{sec_result_main}.
+
+In the analysis we use different SRA increases $j$, as summarized in Figure \ref{rdd_setup} presenting the different jumps in the SRA used as sources of identification. Among the eight increases in SRA we observe, we discard the last one, as we do not have enough data to study it. We also discard the third jump, for the following reason. An important identifying assumption for the RD is that the SRA must be the only varying factor at the vicinity of the cutoff. In particular, no other reforms impacting employment trajectories should interfere with the SRA reform. As the third jump (from 65 and 2 months to 65 and 3 months) occurs almost at the same moment as the second pillar reform of early retirement schemes (November 1949 vs. January 1950), we do not estimate our RD model for this SRA reform.  We end up with six cutoffs/reforms, for which we estimate equation (\ref{eq_RD_gen}).  
+As the right of the discontinuity for one cutoff is also the left of the discontinuity for the next one, some observations will be used alternatively as treatment and control groups in different estimations. In order to increase our sample size and to simplify the exposition of the main results, we group the three consecutive three months increases in the SRA (cutoffs 3 to 5) in a pooled estimation, for which we stack the estimation samples for the different cutoffs. In this setting, some observations are used twice, as they appear on both side of the discontinuity for different cutoff samples. As a robustness test, we use an alternative approach where individuals are randomly assigned to treatment or control groups, so that they appear only once in the pooled estimation sample. Appendix Table \ref{sample_description} presents summary statistics for the different estimation samples we use in the empirical analysis. 
+
+\begin{figure}[!t]
+	\caption{Sources of variation used in the empirical analyses}
+%\vspace{3mm}
+\label{rdd_setup}
+	\centering
+	\includegraphics[scale = 0.6]{figures/summary.pdf}
+ 	\begin{minipage}{15cm}%
+  \footnotesize
+	\textsc{Notes:}  This figure presents the sources of variation used in the empirical analysis. Among the eight jumps in the SRA we observe, we remove the last one (not enough observations after the cufoff) and the third one (simultaneous 2nd pillar reform). We end up with six different cutoffs for which we estimate equation \ref{eq_RD_age}. In our main specification, we regroup cutoffs 3 to 5 (highlighted by the shaded area) in a pooled RD estimation. 
+	\end{minipage}%
+\end{figure}
+
+One identifying assumption of the RD approach is that individuals around the cutoff are similar in all dimensions except for their SRA. This implies in particular that individuals should not be able to manipulate the running variable. Figure \ref{fig_nb_birth1} of the appendix presents the number of births for different birth years. We actually observe some spikes at round numbers for individuals born outside of the Netherlands. These are the result of administrative decisions on the date of birth at registration when this information is missing. As those dates sometimes coincide with SRA change, this may affect the estimates when e.g. migrants differ in their labor market outcomes from natives. For this reason, we remove migrants from our sample of analysis. Figure \ref{fig_nb_birth2} shows the resulting number of births by date of birth for the pooled sample, which exhibits no systematic discontinuity at the cutoff. Moreover, we additionally study the effects of so-called 'donut' RD regressions in the robustness tests in subsection \ref{sec_result_main}, where we leave out observations just to the left and right of the cutoff points.
+
+We also verify that the estimation samples are similar from both sides of the cutoff in terms of observable that should not be impacted by the SRA increases, e.g socio-demographic variables (gender, household status, migration background) and labor force status of the SRA (at age 58). The results of those balancing tests are presented in appendix Figure \ref{fig_rd_balancing}, which show the $\beta$ coefficients from the estimation of equation \ref{eq_RD_gen} for different outcomes. As expected, for almost all variables and estimation samples we observe no discontinuity at the cutoff. We observe some significant differences in terms of household status for some cutoff, but that are very small in terms of magnitude (a point estimate of 0.01 for a baseline of 80\% for the share of individual in couples at 58). 
+
+\section{Results}
+
+\subsection{Main results}\label{sec_result_main}
+
+In this subsection and the next, we focus on the general effects of the SRA increases and consider the results obtained with our pooled estimation sample, regrouping observations for three successive three months jumps in the SRA (see subsection \ref{sec_strategy}). We consider the results for each specific SRA increase later, in subsection \ref{sec_result_cutoff}.
+
+\paragraph{Base specification}
+
+% Figure main
+\begin{figure}[!t]
+\caption{Local linear regression plots one month after SRA of control cohorts}
+\begin{adjustwidth}{-1in}{-1in}	
+\label{rd_plot_workstate}
+\centering
+\includegraphics[scale = 0.65]{figures/rd_plot_workstate.pdf}
+\end{adjustwidth}
+% Notes
+\begin{minipage}{15cm}%
+  \scriptsize
+	\textsc{Notes:} This figure presents local linear regression plots of the shares of individuals in each labor market state for different birth cohorts at the recentered age $t$ = 1 after the SRA age of the control cohorts, for the pooled estimation sample. The SRA jumps up for the birth cohorts at 0.
+	\end{minipage}%
+\end{figure}
+% Table main
+\begin{table}[!h]	
+\caption{Effect of the SRA reform one month after SRA of control cohorts}
+\footnotesize
+\label{table_RD_workstate}
+% Results
+\begin{adjustbox}{max width = \textwidth, max totalheight=.7\textheight, keepaspectratio}
+\hspace*{-1cm}
+% Table
+\input{tables/rd_workstate.tex}
+\hspace*{-1cm}
+\end{adjustbox}
+\vspace*{0.2cm}
+% Notes
+\scriptsize
+\begin{tabular}{ll}
+\begin{minipage}{13cm}%
+	\textsc{Notes:}  This table presents the estimated $\beta_{jt}$ coefficient from equation \ref{eq_RD_age}, for different workstates as outcome variable and for the recentered age $t$ = 1 after the SRA age of the control cohorts, using the pooled estimation sample. We use a second-degree polynomial for the control functions and consider all the observations from both sides of the cutoff in the estimation. 
+\end{minipage}%
+\end{tabular}
+\normalsize
+\end{table}
+
+Graphical evidence on the effect of the reforms and the validity of our identification strategy is presented in Figure \ref{rd_plot_workstate}. This figure shows the average share of individuals in different states on the labor market one month after the old SRA age.\footnote{E.g. 65 years and 7 months for an increase in the SRA from 65 years and 6 months to 65 years and 9 months.} Each panel displays a large change in these shares for the birth cohorts where the SRA jumps, and relatively smooth patterns on both sides of the cutoff, consistent with a direct effect of the reform on labor market outcomes. Indeed, we observe a large drop in the share of individuals that is retired, and substantial increases in the shares in the other labor market states.
+
+Table \ref{table_RD_workstate} presents the corresponding estimation results. These confirm the graphical evidence on the effect of the SRA reforms, with strong effects and estimates that are statistically significant at the 0.1 percent level. We estimate a steep drop in the share of individuals that are retired of 59.5 percentage points. The employment rate increases by 21.2 percentage points (36\% of the decrease in the share in retirement). The share of individuals on disability benefits, unemployment benefits, welfare benefits and other benefits increases, by 12.7, 3.8, 2.4 and 3.1 percentage points, respectively. In total, the share of individuals on social insurance benefits increases by 22.0 percentage points (37\% of the decrease in the share in retirement).
+Hence, the reform generated large employment effects, but also large substitution effects towards other social insurance schemes. Finally, the share of individuals that have no personal income also increases, by 16.4 percentage points (28\% of the decrease in the share in retirement).
+
+\paragraph{Robustness}
+
+Figure \ref{fig_robustness} tests the sensitivity of our results to alternative specifications of equation \ref{eq_RD_age}, focusing on the employment effects.\footnote{Table \ref{table_RD_robustness} in the online appendix gives the regression results of the robustness checks for the employment rate in a table. %\textbf{PM Simon: The robustness checks for the effects on the other labor market states are given in Table X in the online appendix.} : NOT DONE
+} `RTref' is the estimated effect from our base specification. `RT1a' and `RT1b' are the estimated effects using a first-degree or a third-degree polynomials for the control functions $f()$. In `RT2a' we randomly assign individuals to the sample in the pooled RD, so that they never appear more than once in the estimation (so not once in the treatment group for one discontinuity and then again in the control group for the next discontinuity). In `RT2b' we cluster the standard errors at the individual level. In `RT3a' and `RT3b' we make the bandwidth used in the estimations smaller (6 months on each side) or larger (18 and 26 months, the longuest possible), respectively. In order to deal with potential biases related to mass points in the distribution of month of birth (see subsection \ref{sec_strategy}), `RT4a' and `RT4b' present the results of a 'donut-RD' estimation, removing observations around the threshold (at the cutoff in `RT4a', and at the cutoff and one month before in `RT4b'). Finally, `RT5a' and `RT5b' implement the bias-corrected and robust bias-corrected estimation %\textbf{(PM Simon: why should this arise? Perhaps elaborate with one sentence)} 
+proposed by \cite{calonico2014robust}, respectively, including the corresponding optimal choice for the estimation bandwidth. Figure \ref{fig_robustness} shows that the estimation results are very stable across these different specifications.
+
+\begin{figure}[!t] 
+\caption{Employment effect of the reform: robustness}
+\footnotesize
+\label{fig_robustness}
+\centering
+\includegraphics[scale = 0.5]{figures/rd_robustness.pdf}
+\vspace*{0.2cm}
+\scriptsize
+\begin{tabular}{ll}
+\begin{minipage}{15cm}%
+	\textsc{Notes:} The RTref points corresponds to the specification used in Table \ref{rd_plot_workstate}. The next points correspond to the five series of robustness tests (see the text for details and online appendix table \ref{table_RD_robustness} for the full table):
+	\begin{itemize}[label=-,leftmargin=1cm ,parsep=0cm,itemsep=0cm,topsep=0cm]
+		\item[RT1:] Alternative specification for the degree of the polynomials in equation \ref{eq_RD} (1 in RT1a, 3 in RT3a).   
+		\item[RT2:] Alternative specification for pooled RD, using only once each individual (RT2a) and clustering at the individual level (RT2b). 
+		\item[RT3:] Alternative bandwidth used for the estimation compared to the reference (9 on each side), respectively to a smaller (RT3a, 6 on each side) and larger (RT3b, 17 and 12 months) window	
+		\item[RT4:] Donut RD estimation, removing the observation at the cutoff (RT4a) and the -1 and 0 observations (RT5a). 
+		\item[RT5:] Bias-corrected (RT5a) and robust bias-corrected (RT5b) estimation proposed by \cite{calonico2014robust}
+	\end{itemize}
+\end{minipage}%
+\end{tabular}
+\normalsize
+\end{figure}
+
+\paragraph{Upstream and downstream effects} 
+
+Next, we consider potential upstream and downstream effects of the increase in the SRA. Specifically, we consider RD estimates for each month from 36 months before the SRA of the control cohorts, to 12 months after. Figure \ref{full_RD_main} presents the resulting set of RD estimates per labor market state. This figure shows that the SRA reforms  have a statistically significant and large impact between the old and new SRA.\footnote{Note that we positive and significant effects for four months in a row, even tough we consider a three months increase in the SRA. This is due to the definition of work-state that we use -- main source of income -- and to the fact that different types of income are typically combined at the month of retirement. Pension benefits become the main source of income in t = 0 or t = 1 depending on this 'rounding' effect.} Estimated coefficients are small and mostly insignificant for the months before the (old) SRA of the control cohorts and for the the months after the (new) SRA of the treatment cohorts.
+We however observe some upstream (before the old SRA) and downstream (after the new SRA) effects, of small magnitude. They may in part result from our inability to perfectly control for business cycle and/or cohort effects. Indeed, there is some variation in the small up- and downstream effects depending on the number of polynomials we include to control for smooth time and cohort effects, see Figure \ref{full_RD_robustness} in the appendix. Though we should also note that we do observe a slight increase in the no-income category a few months before the SRA increase, which seems to be related to a similar decrease in the retirement category. This can be attributed to some degree of stickiness in the retirement behavior at the old SRA when the SRA increases, that has been documented for the US by \cite{deshpande2020sticky}. Figure \ref{full_RD_cohort} of the appendix presents separated estimation for the different SRA reforms of the estimation sample, and indeed shows that the small pre-SRA effects start at age 65 for each cutoff.   %Retirement at age 65 is still common after the SRA increase, which is likely due to firm or sector specific pension plans that are still defined according to the 65 reference. 
+
+
+\begin{figure}[!t]
+\begin{adjustwidth}{-1in}{-1in}	
+\caption{Estimated coefficient for all ages and work status}
+\label{full_RD_main}
+\centering
+\includegraphics[scale = 0.65]{figures/full_RD_main.pdf}
+\end{adjustwidth}
+\begin{minipage}{14cm}%
+\scriptsize
+\textsc{Note:} This figure presents the estimated $\beta$ coefficients of equation (\ref{eq_RD_age}) for the pooled RD specification, estimated separately for each month, from 36 months before the SRA of the control cohorts to 12 months after. 
+\end{minipage}%
+\end{figure}
+
+This finding of hardly any upstream effects is consistent with the results found in similar settings \citep[see e.g.][]{staubli_does_2013}. %\footnote{The literature typically does not consider downstream effects.} 
+One explanation for the lack of upstream effects in our setting could be that we only measure the short-run effects of the reform, and that the mechanisms underlying the distance to retirement have effects on younger ages only in the longer run. However, also in the long run, it is not obvious that upstream effects will arise. \cite{mastrobuoni_labor_2009} finds no upstream effects for a reform of the normal retirement age in the US announced almost 20 years in advance, \cite{geyer_closing_2021} find no upstream effects for a reform of the early retirement age in Germany announced 10 years in advance. However, \cite{carta2021working} do find significant upstream effects on labor supply for middle-aged women (and their partners) of a reform of the early retirement age in Italy.
+
+%\begin{comment}
+%\begin{figure}[!t]
+%\centering
+%\begin{adjustwidth}{-0.5in}{-0.5in}
+%\caption{Employment effect of SRA increase by age in months}
+%\label{fullRD}
+%\includegraphics[scale = 0.5]{figures/fullRD_bis.pdf}
+%\end{adjustwidth}
+%
+%\begin{minipage}{14cm}%
+%\scriptsize
+%\textsc{Note:} This Figure presents the estimated $\beta$ coefficients of equation %(\ref{eq_RD}) for all ages from 63.5 and all cutoffs we consider. Results are presented %for two different definition of employment: labour income as main source of income %(definition 1, Panel (a)) and labour income above 0 (definition 2, Panel (b)).
+%\end{minipage}%
+%\end{figure}
+%\end{comment}
+
+\paragraph{Substitution effects} As noted above, the SRA reform resulted in substantial substitution to social insurance schemes between the SRA of the control cohorts and the SRA of the treatment cohorts. These substitution effects are the sum of two effects: i) mechanical substitution, because people remain longer in their pre-SRA state or the passage of time, and ii) active substitution, where individuals actively switch from e.g. employment to UI or DI now that the SRA has increased.   
+
+\begin{table}[!t]	
+	\caption{Comparison substitution effects of the SRA reform}
+	\footnotesize
+	\label{table_RD_substitution}
+	% Results
+	\begin{adjustbox}{max width = \textwidth, max totalheight=.7\textheight, keepaspectratio}
+		\hspace*{-1cm}
+		% Table
+		\input{tables/rd_substitution.tex}
+		\hspace*{-1cm}
+	\end{adjustbox}
+	\vspace*{0.2cm}
+	% Notes
+	\scriptsize
+	\begin{tabular}{ll}
+		\begin{minipage}{14cm}%
+	\textsc{Notes:}  This table first presents the estimated $\beta_{jt}$ coefficient from equation \ref{eq_RD_age}, for different workstates as outcome variable and for the recentered age $t$ = 1 after the SRA age of the control cohorts, using the pooled estimation sample ('Base sample'). Subsequently, we show the estimates restricting the sample of estimation to individuals that are employed between ages 64 years and 9 months and 65 years and 3 months ('Employed at 65'). Finally, we show the treatment effects that result from a linear extrapolation of the share of the different states from -14 months to -2 months before the SRA of the control cohorts, extrapolated to $t$ = 1 after the SRA age of the control cohorts, minus a linear extrapolation of the share of the different states from +2 months to +14 months (up to a maximum of age 67), extrapolated (backwards) also to $t$ = 1 after the SRA age of the control cohorts ('Mechanical model').
+		\end{minipage}%
+	\end{tabular}
+	\normalsize
+\end{table}
+
+%One way to get a handle on the extent of active substitution is to consider the estimates for the sample of individuals that are employed just before the SRA of the control cohorts, following the analysis of \cite{geyer_closing_2021} of an ERA reform in Germany.\footnote{One potential issue that might arise in this strategy is dynamic selection \citep{geyer_closing_2021}. When the SRA reform affects the composition of individuals in employment just before the SRA of the control cohorts, this may affect the subsequent flows into various types of social insurance from employment via a composition effect. However, as noted in the discussion of upstream effects, the estimated effect of the SRA reform on employment of the treatment cohorts just before the SRA of the control cohorts is very small and statistically insignificant. Hence, dynamic selection is unlikely to be an issue in our context.} This excludes individuals already on social insurance before they reach the SRA of the control cohorts. Table \ref{table_RD_substitution} gives the estimated treatment effects on the different labor market states for the base sample (the population) and for the sample of individuals employed at age 65.\footnote{More specifically, we restrict the sample of the pooled RD to individuals that are employed between ages 64 years and 9 months and 65 years and 3 months.} we observe that the estimated treatment effects on different types of social insurance is much smaller for the sample employed at 65, suggesting that by far most of the substitution towards social insurance is mechanical rather than active. The only treatment effect on social insurance types that is not an order of magnitude smaller for the sample employed at 65 is the share on unemployment insurance. However, we argue that in our context, this is still likely to be an overestimate of the active substitution towards UI. 
+
+%Indeed, for two reasons, conditioning at employment at the age just before the SRA of the control cohorts does not give a clear view on the extent of active substitution in our context. First, we consider a reform of the SRA, individuals cannot enter UI or DI beyond the SRA, hence the control cohorts will not be able to enter these schemes beyond their SRA. Second, conditioning on 65 does not control for an age effect for the treatment group beyond the SRA of the control cohorts.\footnote{To be precise, does not control for a different age effect below and above the SRA, for any birth cohort. If the age effect would be the same above and below the SRA, this would not affect the results.} For example, when individuals age, we see a decline in the share of individuals that are employed before the SRA, due to e.g. deteriorating health conditions, which is likely to continue for the treatment cohorts beyond the SRA of the control cohorts to their higher SRA. 
+
+To study mechanical versus active substitution, we compare the estimated treatment effects to the predictions from a simple mechanical model, as outlined in subsection \ref{mechanical_model}. In the mechanical model, the shares of individuals in the treatment cohorts in the different labor market states follow a linear extrapolation between the SRA of the control cohorts and their higher SRA from the ages before the SRA of the control cohorts.\footnote{We extrapolate the shares of the treatment cohorts beyond the SRA of the control cohorts using the shares observed for the treatment cohorts from 14 months before the SRA of the control cohorts to minus 2 months before the SRA of the control cohorts. The analysis of upstream effects suggests that these outcomes are (virtually) not affected by the SRA reform.} This also allows for potential ageing effects for the treatment cohorts beyond the SRA of the control cohorts (e.g due to deteriorating health conditions). To get at the treatment effect in the mechanical model, we then subtract the counterfactual shares\footnote{The counterfactual that the SRA had not moved up for the treatment cohorts.} of individuals in the treatment cohorts in the different labor market states using a (backwards) linear extrapolation from the ages beyond the SRA of the treatment cohorts.\footnote{We extrapolate the shares of the treatment cohorts beyond the SRA of the control cohorts using the shares observed for the treatment cohorts from 2 months after the SRA of treatment cohorts to 14 months after the SRA of treatment cohorts (up to age of 67, which implies less than 14 months for the latest cohorts). The analysis of downstream effects suggests that these outcomes are (virtually) not affected by the SRA reform.} This also deals with a potential age effect beyond the SRA. The results are given in the last rows in Table \ref{table_RD_substitution}. We see that the mechanical model predicts the estimated treatment effects very well, suggesting that active substitution into other social insurance schemes between the SRA of the control cohorts and the SRA of the treatment cohorts very limited.
+
+%\begin{table}[!t]	
+%	\caption{Substitution effect of the SRA reform: employed at 60}
+%	\footnotesize
+%	\label{table_RD_substitution}
+%	% Results
+%	\begin{adjustbox}{max width = \textwidth, max totalheight=.7\textheight, keepaspectratio}
+%		\hspace*{-1cm}
+% 	 % Table
+%		\input{tables/rd_substitution_60.tex}
+%		\hspace*{-1cm}
+%	\end{adjustbox}
+%	\vspace*{0.2cm}
+%	% Notes
+%	\scriptsize
+%	\begin{tabular}{ll}
+%		\begin{minipage}{13cm}%
+%	\textsc{Notes:}  See Table \ref{table_RD_workstate}. We further restrict the sample of estimation to individuals still employed at age 60. 
+%		\end{minipage}%
+%	\end{tabular}
+%	\normalsize
+%\end{table}
+
+\paragraph{Fiscal costs}  
+
+Mechanical or otherwise, substitution effects have important consequences for the effects of the SRA reforms on expenditures and receipts of the government. To determine the overall effect on the government budget we first estimate equation (\ref{eq_RD_age}) using data on monthly gross income from the different income sources for each individual (including the zero's). In this way we also account for individuals that have multiple sources of income in a given month, and changes therein.\footnote{Descriptive statistics for the shares of individuals having income by income source (not just the share with the main income source) are given in Figure \ref{RD_plot_non_exclusive} in the online appendix. The patterns are very similar to Figure \ref{workstate}. One notable exception is the small peaks we observe for welfare benefits just before the new SRA, which is likely to reflect the exhaustion of UI benefits for some individuals just before the first-pillar pension benefits start.} Because second-pillar pension benefits are approximately actuarially fair \citep{de_vos_social_2019}, we focus on first-pillar pension benefits when we consider the effect of pension income on the government budget. %\footnote{Lower second-pillar benefits before the SRA will be compensated by higher second-pillar benefits after the SRA.} 
+Furthermore, as we find essentially no upstream or downstream effects\footnote{Also not for each income source separately, see Figure \ref{full_RD_amount} in the online appendix. Again, the patterns are very similar to Figure \ref{workstate}. Though we do see some peaks and troughs for some benefits, which are likely to reflect composition effects, as a select group of individuals in the control group would persist in the respective labor market states after the SRA.}, we again focus on the effects between the SRA of the control cohorts and the SRA of the treatment cohorts. Specifically, we consider again the effects at $t=1$ month after the SRA of the control cohorts.
+
+The results are given in Table \ref{table_RD_government_budget}. The government saves a total of 1,126 euro per person on average on gross first-pillar pension benefits. Furthermore, income from wages and profits rise, by 682 euro per person on average. Assuming a marginal tax rate of 45\% on these additional wages and profits \citep{quist_2015}, income tax receipts rise by 307 euro per person on average. However, expenditures on gross UI benefits, DI benefits, social assistance and other types of social insurance rise by 99, 285, 24 and 24 euro per person on average, respectively. In total, on average 432 euro of gross benefits per person is lost on additional social insurance expenditures (38\% of the savings on gross first-pillar pensions). Assuming a marginal tax rate of 45\% on these changes in gross benefits as well, the government saves $(1-0.45)\cdot(1,126-432)=382$ euro per person on net benefit payments. Hence, the net fiscal gain to the government is $307+382=689$ euro per month per person on average. For a cohort size of about 120 thousand individuals, this amounts to 83 million euro per month between the SRA of the control cohorts and the SRA of the treatment cohorts.     
+
+%Table \ref{table_RD_government_budget} also gives the treatment effects from the mechanical model, following the same methodology as before for the substitution effects but now using the amounts per person rather than the shares by main source of income. Also when it comes to the fiscal costs of the reform for the government, the mechanical model does a rather good job at predicting these. Hence, active substitution and other behavioral effects seem to play a minor role in the fiscal cost effects of the reform. 
+
+%\textbf{PM I will add an alinea on mechanical budgetary effects if we decide to do that.} \\
+%\textbf{Question EJ: to be consistent with the expenditure side, increase in tax revenu through additional social security contributions should not include 2nd pillar pension right ? More generally I am not sure we should treat 1 and 2 pillar differently both on the revenu and expenditure side } \\
+%\textbf{PM EJ add a number increase expenditure/ decrease expenditure including the increase in tax receip ? Like the 37\% above but including tax revenue} \\
+%\textbf{PM EJ Replace table with SRA + 1 only}
+ 
+%%% Table for effects on the government budget
+\begin{table}[!t]	
+\caption{Effect on average monthly gross income by income source}
+\footnotesize
+\label{table_RD_government_budget}
+% Results
+\begin{adjustbox}{max width = \textwidth, max totalheight=.7\textheight, keepaspectratio}
+	\hspace*{-1cm}
+	% Table
+	\input{tables/rd_government_budget}
+	\hspace*{-1cm}
+\end{adjustbox}
+\vspace*{0.2cm}
+% Notes
+\scriptsize
+\begin{tabular}{ll}
+\begin{minipage}{13cm}%
+	\textsc{Notes:}  This table presents the estimated $\beta_{jt}$ coefficient from equation \ref{eq_RD_age}, for each income source using individual gross incomes (including the zero's). We use a second-degree polynomial for the control functions and consider all the observations from both sides of the cutoff in the estimation. We present outcomes for the pooled RDD model.
+\end{minipage}%
+\end{tabular}
+\normalsize
+\end{table}
+
+%\textbf{PM EJ: Maybe put here the comparison of our results to the mecanical/behavioral model ?}
+
+%\textbf{PM: EJ add mention and comments to appendix Figures \ref{full_RD_substitution60} \ref{full_RD_substitution65} \ref{full_RD_amount}}
+
+\subsection{Effect on the average retirement age}
+
+One limitation of the RD estimates provided so far is that they only give the 'local' effect of the SRA-reform on the probability of being employed, retired, unemployed, etc. They do not yield the effect of the reform on the effective retirement age, which may be a more relevant elasticity parameter for the evaluation of the effect of pension reforms. We remedy this shortcoming by deriving an effect of the reform on the average retirement age from our estimates. 
+
+Under some assumptions for the effect of the reform at older ages, we can use the age-specific estimates to compute the effects of the reform on the average retirement age for our two definitions of the retirement age (employment as main source of income and non-zero labor income). The methodology is described in detail in Appendix \ref{average_appendix}. The effect of the reform on the average retirement age can be computed as the sum of the coefficients when using employment as the outcome. The intuition behind the result is the following: the RD estimates can be interpreted as the difference between the cumulative distribution of retirement  age caused by the change in the SRA, from which we can retrieve the impact on the employment rates \citep[see also][]{mastrobuoni_labor_2009}. With this approach, we find that the three month increase in the SRA leads to a 0.61 months increase in the average retirement age, as shown in the panel (a) of Figure \ref{rd_comparison}. This correspond to a 0.21 elasticity of the average retirement age to an SRA increase. 
+
+In order to assess the validity of our estimation of the effect of the reform on the average retirement, we compare our result to a RD estimation on the average retirement age. More precisely, we estimate the following model: 
+\begin{equation}
+	\label{eq_RD_average}
+	y_{i}^j = \alpha_j  + \beta_j  T_{i} + \gamma_j f(Z_{i} - c_j)  + \delta_j f(Z_{i} - c_j) T_{i} + \eta X_{it} + \epsilon_{i},
+\end{equation}
+\noindent where $y_i$ is the individual retirement age, defined as the maximum age of employment. %(and we correct for seasonality in retirement behavior by month of birth). 
+Panel (b) of Figure \ref{rd_comparison} presents the RD plot for the average retirement age, using the same reform and the same population as in Panel (a). We find a point estimate of 0.59 months (significant at the 1\% level),
+which is slightly lower but of similar magnitude as the one obtained using the RD estimates for the employment rates.\footnote{Note that the results for the retirement age are generally more noisy and sensitive to the specifications, see online appendix Table \ref{table_RD_average}.} 
+
+\textbf{PM TODO SR: put table in online appendix + add alternative measure for sum of coefficients}
+
+%Our estimates of the effect of the reform on the average retirement are smaller in terms of magnitude to the ones found by \cite{manoli_effects_2018} for Austria (who use a regression kink design). They find an elasticity of 0.4 for a one year increase in the early retirement age. However, they restrict their sample to individuals working at age 53, for whom they can observe a transition from work to retirement. We expect the effect to be stronger for this subpopulation, since the pre-retirement employment level is higher. Panel (a) of Figure \ref{rd_comparison} presents the RD estimates and the associated average retirement age we obtain for a more comparable population to \cite{manoli_effects_2018}, individuals employed at age 57. We obtain a 0.95 months response to a 3 months increase, i.e an elasticity of 0.32, that is closer to the findings of \cite{manoli_effects_2018}. 
+
+\vspace{0.2cm}
+\begin{figure}[H]
+	\begin{adjustwidth}{-1in}{-1in}	
+\caption{Effect on average retirement age: comparison of two approaches}
+\label{rd_comparison}
+\centering
+\begin{subfigure}{0.65\textwidth}
+\centering
+\caption{RD on employment rates}
+\includegraphics[width=\linewidth]{figures/rd_full_average_main.pdf} %
+\label{rd_comparison1}
+\end{subfigure}%
+\begin{subfigure}{0.65\textwidth}
+\centering
+\caption{RD on retirement age}
+\includegraphics[width=\linewidth]{figures/rd_average_plot.pdf} 	
+\label{rd_comparison2}
+\end{subfigure}
+\begin{minipage}{15cm}%
+\footnotesize
+	\textsc{Note:} Panel (a) presents the same results as the employment panel of Figure \ref{full_RD_main}. The label shows the sum of significant coefficients and is interpreted as the effect on the average retirement age (see text for details). Panel (b) present a local linear plot with polynomials of degree 2. The label presents the $\beta_j$ parameters of equation (\ref{eq_RD_average}). The full table is available in Table \ref{table_RD_average} the online appendix. 
+\end{minipage}% 
+\end{adjustwidth}
+\end{figure}
+
+\subsection{Effect by SRA reform and interaction with ERA reform}
+\label{sec_result_cutoff}
+
+The analyses of the effect of a SRA increase presented above were carried on a pooled sample of different reforms. We hereby consider each SRA increase separately and compare their effects. Figure \ref{full_RD_cutoff} present the full RD plots for employment, for all the cutoffs we consider. We observe a similar pattern for the different cutoffs, with a large increase in employment rate at ages impacted by the SRA reform, and limited significant difference after or before. There are, however, large differences in the magnitude of the effects. The effects are much stronger for the last four SRA increases than for the first two. The employment effect of the SRA increase one month after the old SRA is about four times bigger for the later increases (20pp vs. 5pp).
+Interestingly, We observe that the effect of the 3 or 4 months increases is more important, not only because it impacts a larger part of the employment trajectory, but also because the effect for one given age is much bigger. As a result, not only the estimated effect of the SRA increase on the average retirement age is bigger, but also the corresponding elasticity, as shown in Table \ref{table_average_cutoff}. The effect of a one month SRA increase almost doubles between the first two reforms and last four. 
+
+This difference is not primarily due the fact that the first increases were 'smaller' (1 month vs. 3 or 4 months), and can be explained by two reasons. First, we observe some stickiness to retirement at 65 for the first SRA increases (see Figure \ref{rd_comparison1}), which delays the effect of the reforms. Second and more importantly, the interaction of the effect of the SRA increase with the early retirement age (ERA) scheme reform. As explained in more details in Appendix \ref{appendix_era}, the ERA reform occurred between the second and third SRA jump under study, and had a major impact on retirement and employment patterns between age 60 and 65. As early retirement schemes were removed or made less generous, the distribution of retirement was massively shifted from pre-SRA ages to the SRA (Figure \ref{evo_distribution_era}). The share of individuals retiring at the SRA almost doubles, from around 5\% to 10\%. This shift in the distribution of retirement age strongly interacts with the effect of the SRA reform. This is illustrated in Figure \ref{distribution_comparison}, which compares the effect of an SRA increase on the retirement distribution before and after the ERA reform. As much more individuals retire at the SRA after the ERA reform, shifting the SRA also have a much more important effect on employment around the SRA and on the average retirement age. 
+
+This interaction between the two types of reforms therefore explains the different elasticities measured for the SRA increase before (cutoffs 1 and 2) and after (cutoff 3-6) the ERA reform. The result we establish here is more general : the share of individuals retiring at the old SRA before the reform is the main driving factor of the effect of a SRA increase. This is also a key dimension to understand the different estimates found in the literature on related reforms, as shown in the next section.
+
+%\textbf{TODO SR or EJ : write description of the effect of ERA reform in Appendix \ref{appendix_era}} 
+%\textbf{TODO SR: perhaps here also consider the effects for men and women?}
+
+
+\begin{figure}[H]
+	\begin{adjustwidth}{-1in}{-1in}	
+\caption{RD employment effect by cutoff}
+\label{full_RD_cutoff}
+\centering
+\includegraphics[scale = 0.65]{figures/full_RD_cutoff.pdf}
+\end{adjustwidth}
+\begin{minipage}{15cm}%
+\scriptsize
+\textsc{Note:} This Figure presents the estimated $\beta$ coefficients of equation (\ref{eq_RD_age}) for each increase in the SRA we consider and for each monthly age three years before and one year after the old SRA. 
+\end{minipage}%
+\end{figure}
+
+\begin{table}[!t] 
+	\begin{adjustbox}{max width = \textwidth, max totalheight=.6\textheight, keepaspectratio}
+		\hspace*{-1cm}
+		% Table
+		
+		\caption{Effect on the average retirement age}
+		\label{table_average_cutoff}
+		\footnotesize
+		\begin{tabular}{lcccccc}
+			\toprule
+			\input{tables/elasticities.tex} 		
+		\end{tabular}
+		\hspace*{-1cm}
+	\end{adjustbox}
+	
+	\vspace*{-0.4cm}
+	\begin{tabular}{ll}
+		\footnotesize
+		\begin{minipage}{12cm}%
+			\textsc{Notes:} The increase in retirement age are computed using the coefficient presented in Figure \ref{full_RD_cutoff}, following the methodology depicted in Appendix A. 
+		\end{minipage}%
+	\end{tabular}
+	\end{table}
+
+\vspace{0.2cm}
+\begin{figure}[H]
+\begin{adjustwidth}{-1.1in}{-1in}
+	\caption{Effect of SRA reform on the distribution of retirement age}
+	\label{distribution_comparison}
+	\centering
+	\begin{subfigure}{.7\textwidth}
+		\centering
+		\caption{Evolution before the ERA reform}
+		\includegraphics[width=\linewidth]{figures/evo_distribution1.pdf} %
+		\label{rd_comparison1}
+	\end{subfigure}%
+	\begin{subfigure}{.7\textwidth}
+		\centering
+		\caption{Evolution after the ERA reform}
+		\includegraphics[width=\linewidth]{figures/evo_distribution3.pdf} 	
+		\label{rd_comparison2}
+	\end{subfigure}
+	\begin{minipage}{15cm}%
+		\footnotesize
+		\begin{minipage}{15cm}%
+			\footnotesize
+			\textsc{Note:} Panel (a) 
+		\end{minipage}% 
+	\end{minipage}%
+ \end{adjustwidth}
+\end{figure}
+
+\section{Key determinants of the effect of pension age polices}\label{channels}
+
+The mechanical model seems to predict the estimated treatment effects in the Netherlands quite well. In this section we show that the mechanical model is also helpful in understanding the different results found on (early) retirement reforms in other contexts. Furthermore, we consider the role of key factors that potentially play a role in the substantial bunching of retirement at the SRA in the Netherlands.
+
+\subsection{Reconciling the findings of the literature}
+%\subsection{Relating the mechanical model to the findings in the literature}
+
+For the Netherlands, there are no apparent upstream and downstream effects and substitution towards other types of social insurance after the SRA of the control cohorts is nearly all mechanical. This is consistent with the typical findings of the quasi-experimental literature on ERA, SRA and NRA reforms in other contexts, see e.g. \cite{mastrobuoni_labor_2009}, \cite{staubli_does_2013} and \cite{geyer_closing_2021} on the limited role of upstream effects\footnote{The recent analysis of \cite{carta_working_2019} being a notable exception, they do find significant upstream effects on labor supply for middle-aged women (and their partners) of a reform of the early retirement age in Italy.} and downstream effects, and e.g. \cite{manoli_effects_2018}, \cite{oguzoglu_et_al_2020} and \cite{geyer_closing_2021} on the limited role of active substitution.
+
+\begin{table}[!t]
+\begin{adjustwidth}{-0.75in}{-0.5in}	
+		\scriptsize
+		\caption{Results related studies on effects near ERA, NRA or SRA$^a$}
+		\label{comparison}
+		\begin{tabular}{lclc cc ccc}		
+		
+			\toprule
+			
+			\textbf{Study} & \textbf{Country} & \multicolumn{1}{l}{\textbf{Reform}} & \multicolumn{1}{c}{\textbf{Method}}   &  \multicolumn{2}{c}{\textbf{Results}}        &  \multicolumn{3}{c}{\textbf{At ERA, NRA or SRA}}                           \\	
+			&  &  &               & Employm. & Retirem. &  Empl. & Hazard & Bunching$^d$ \\
+			&              &               &              & rate          & rate                & rate$^b$              & rate$^c$     &                  \\
+			&              &               &              & pp            &  pp               &  \%             &  Level       & \%           \\
+			\midrule
+			
+			%%% Staubli and Zweimuller
+			Staubli \& & 
+			% Reform men
+			AUT & \male: ERA 60 $\rightarrow$ 62 &  
+			% Method 
+			DID  &
+			% Results men
+			+9.8 & --24.8 &
+			% At SRA level men (source: Figure 4)
+			28   & 0.50  & 14 \\ 
+			
+			% Reform women
+			Zweimüller (2013) && \female: ERA 55 $\rightarrow$ 58+3m & &
+			% Results women
+			+11.0 & --25.4  & 
+			% At SRA level women (source: Figure 5)
+			57  & 0.25  & 14 \\ 
+			
+			%%% vestad_2013 .
+			% Reform
+			Vestad (2013) & NOR & ERA 64 $\rightarrow$ 62 & 
+			% Method
+			DID & 
+			% Results
+			--33.2 & $\times$ &  
+			% Prereform level 
+			65 & 0.46 & 30 \\
+
+			%%% atalay_impact_2015
+			% Reform
+			Atalay \& Barrett (2015) & AUS & \female: NRA 60 $\rightarrow$ 65 & 
+			% Method
+			DID & 
+			% Results
+			+7.7 & $\times$ &  
+			% Prereform level (Figure 2)
+			30--50 & $\times$ & $\times$ \\
+
+			%%% Cribb et al.
+			Cribb et al. (2016) &
+			% Reform 
+			UK & \female: ERA 60 $\rightarrow$ 62 &  
+			% Method 
+			DID  &
+			% Results
+			+6.3 & --11.5 &
+			% Pre-reform levels (source: Figure 2 and 4)
+			55 & 0.25 & 14 \\ 
+						
+			%%% de_vos_et_al_2019
+			% Reform
+			De Vos et al. (2019) & NLD & SRA 65 $\rightarrow$ 65+6m & 
+			% Method
+			DID & 
+			% Results
+			+10 & $\times$ &  
+			% Prereform level 
+			43 & 0.35 & 15 \\
+
+			%%% rabate_rochut_2019
+			%Reform
+			Rabaté \& Rochut (2019) & FRA & NRA 60 $\rightarrow$ 61 &
+			% Method
+			DID & 
+			% Results
+			+20.9 & --47.8 &  
+			% Prereform level 
+			45 & 0.50 & 23 \\
+
+			%%% Geyer Welteke
+			Geyer \& Welteke (2021) &
+			% Reform 
+			GER & \female: ERA 60 $\rightarrow$ 63 &  
+			% Method 
+			RDD  &
+			% Results
+			+13.5 & --27.6 &
+			% Pre-reform levels (source: Figure 2 and 4)
+			62 & 0.19 & 12 \\ 
+
+			%%% Atav et al
+			\textbf{Update: This paper} &
+			% Reform 
+			NLD & Cohorts with & RDD  & +4.5 & --13.5 & 15 & 0.50 & 8 \\
+               & & generous ER$^e$ & \\                      & &  SRA 65 $\rightarrow$ 65+2m & \\  
+			&  & Cohorts with less  &  	RDD  & +20.3 & --58.6 & 29 & 0.70 & 20 \\
+			& & generous ER$^f$ \\
+                                     & & SRA 65+3m $\rightarrow$ 66 \\
+		%	NLD & Generous ER \\
+		%	     &  & SRA 65         $\rightarrow$ 65+1m & 	RDD  & +3.8 & --11.9 & PM & PM & PM \\ 
+		%	      & & SRA 65+1m $\rightarrow$ 65+2m & 	RDD  & +5.3 & --15.1 & PM & PM & PM \\ 
+		%	      & & Less generous ER \\
+		%	      & & SRA 65+3m $\rightarrow$ 65+6m & 	RDD  & +20.4 & --58.1 & PM & PM & PM \\ 
+		%	     &  & SRA 65+6m $\rightarrow$ 65+9m & 	RDD  & +18.9 & --58.9 & PM & PM & PM \\ 
+		%	     &  & SRA 65+9m $\rightarrow$ 66        & 	RDD  & +19.9 & --57.5 & PM & PM & PM \\ 
+		%	     &  & SRA 66        $\rightarrow$ 66+3m & 	RDD  & +21.8 & --59.8 & PM & PM & PM \\ 
+			\bottomrule
+		\end{tabular}
+\begin{minipage}{17cm}%
+	\textsc{Notes:} $^a$Exact references for the values reported in this table can be found in Table \ref{comparison_exact_references} in the online appendix. $^b$The employment rate just before the ERA, NRA or SRA. $^c$The drop in the share of employed persons at the SRA over the share of employed persons just before the ERA, NRA or SRA. $^d$The share of employed persons retiring at the ERA, NRA or SRA. $^e$Averages for cutoff 1 and 2. $^f$Averages for cutoffs 3 to 6.
+\end{minipage}%
+\vspace{-.5cm}
+\end{adjustwidth}
+\end{table}
+
+Even so, there is still a wide range in the estimates of e.g. the employment effects found in the related literature, see Table \ref{comparison}.\footnote{Table \ref{comparison_ave} gives a brief overview of related studies on the effect on the average retirement age. \textbf{PM Egbert: brief comment on the differences we observe}.} Indeed, the effect on the employment rate ranges from 6.3 percentage points in \cite{cribb2016signals} to 20.9 percentage points in \cite{rabate_employment_2019}. However, the key elements behind these effects are very much the same and follow from the mechanical model as outlined in subsection \ref{mechanical_model}. We do not have the data from the other studies, but if we ignore a potential different cohort and age effect before and after the SRA, the mechanical model predicts that the employment effect between the SRA of the control cohorts and the SRA of the treatment cohorts should be very close to the drop in the employment rate at the SRA of the control cohorts, or the 'bunching' of retirement at the SRA as we denote it in Table \ref{comparison}.     
+Indeed, from Table \ref{comparison} we see that the estimated treatment effects on the employment rate are closely related to the bunching at the relevant ERA, NRA or SRA of the control cohorts. This is a rather intuitive statement -- as individuals retiring before as well as after the retirement age are apparently not impacted by the reform -- but it is key to understanding the different results found in the literature. The different findings in the literature then mainly reflect differences in bunching at the retirement age. Furthermore, we observe that the estimated employment effect for the SRA shift in the Netherlands for the later cohorts (born after 1949) -- that faced the less generous ER scheme -- is relatively high (\textbf{19--22} percentage points), whereas the employment effect for the earlier cohorts (born before 1950) -- that faced the more generous ER scheme -- is relatively low (\textbf{4--5} percentage points). This is another illustration of the role of mechanical effects, as the pre-reform employment rate at the SRA is much higher for the cohorts facing the less generous ER scheme.
+
+Related to this, table \ref{comparison} is also informative about the two key elements that make up the bunching at the (early) retirement age: i) the share of individuals still employed just before the retirement age, and ii) the hazard rate into retirement at the retirement age for those individuals. 
+There are substantial differences across contexts and groups. This is shown for example by the results for men and women in \cite{staubli_does_2013}). They find a similar effect of approximately 10 percentage points for men and women, but this consists of a relatively high pre-ERA employment rate and a relatively low
+hazard rate for women (where the ERA is lower for women than for men) and a relatively low employment rate for men but combined with a high hazard rate into retirement. This shows that a similar point estimate for the effect of the reform can hide very different underlying mechanisms.
+
+For the Netherlands, the employment rate before the retirement age we consider is relatively low, which is likely to be due to the fact that we consider a reform that targets individuals at a relatively old age. However, the hazard rate out of employment is relatively high at the retirement age we consider, especially for the later cohorts. Below we consider potential channels at work in the relatively high hazard rate out of employment at the SRA in the Netherlands. 
+
+\subsection{Potential channels behind retirement at the SRA}
+
+We consider the potential channels behind the bunching at the SRA in the Netherlands by comparing the hazard rates of subgroups of the elderly that are impacted to a different degree by these channels.
+
+\begin{figure}[p]
+	
+	\begin{adjustwidth}{-1.1in}{-1in}
+		
+	\caption{Determinants of bunching at the SRA}
+	\label{channels}
+	\centering
+	\begin{subfigure}{0.65\textwidth}
+		\centering
+		\caption{Financial incentives}
+		\includegraphics[scale=0.4]{figures/mechanism_sector.pdf} %
+		\label{channel_sector}
+		\vspace*{0.3cm}
+	\end{subfigure}
+	\begin{subfigure}{0.65\textwidth}
+		\centering
+		\caption{Credit constraints}
+		\includegraphics[scale=0.4]{figures/mechanism_wealth3.pdf} 	
+		\label{channel_credit}
+	\vspace*{0.3cm}
+	\end{subfigure}
+	\begin{subfigure}{0.65\textwidth}
+	\centering
+	\caption{Demand side effects and norms}
+	\includegraphics[scale=0.4]{figures/mechanism_self_employed.pdf}
+	\label{channel_norm}
+\end{subfigure}
+	\begin{minipage}{15cm}%
+		\footnotesize
+		\small \textsc{Note:} These panels present the retirement hazard rate by quarterly age (probability of retire at this age conditional on not being retired before), for different subgroups. Panel (a) compares individuals working in the healthcare sector at age 60 to individuals working in other sectors. Panel (b) compares individuals in the first and last quartile of wealth (measured at age 60, for the whole population). Panel (c) compares wage earners to self-employed (defined by the situation at age 60).
+	\end{minipage}%
+
+\end{adjustwidth}
+
+\end{figure}
+
+\paragraph{Kinks in the budget set} Second pillar pensions can represent a large share of the total pension. Hence, kinks in the second pillar pension could potentially be an important driver of the bunching we observe (as in e.g \cite{Brown2013}). To test whether this channel is important, we focus on the health care sector, for which we know that there is no financial incentives to retire exactly at the SRA from \citet{kantarci_what_2020}. As a result, if bunching were primarily driven by financial incentives in the second pillar pension, we would observe no bunching in the healthcare sector. %whereas there might be incentives to retire at the SRA from second pillar pensions in other sectors. 
+Figure \ref{channel_sector} compares the hazard rate (into retirement) by age for individuals working in the health care sector (measured at age 60), to the hazard rate of individuals working in other sectors. We do not see any difference between the two groups, if anything, bunching is stronger in the healthcare sector. This suggests that kinks in the second pillar pension are not the main driver of bunching at the SRA. 
+
+\paragraph{Credit constraints} Since individuals cannot borrow against their first-pillar pension wealth, they may be constrained in their consumption smoothing and may be forced to work until the moment they can get their first pillar pension. This would generate bunching at the SRA. We observe liquid household wealth in our data.\footnote{Contrary to \citet{cribb2016signals}, who use (relatively illiquid) home ownership as a proxy for credit constraints.} Figure \ref{channel_credit} then compares the hazard rate for individuals in the lowest and the highest wealth quartiles. We do observe a somewhat larger hazard rate at the SRA for individuals with relatively low (liquid) wealth. However, we also observe a large hazard rate for the individuals with relatively high (liquid) wealth, suggesting that credit constraints are only part of the explanation. 
+
+\paragraph{Demand side factors} Demand side factors are likely to play a key role in the large bunching at the SRA in the Netherlands. There is evidence that changes in employment protection at key ages of the pension system can be an important driver of bunching \citep{rabate2019can}. We expect this effect to be relatively strong in the Netherlands. Employment protection in the Netherlands was and is one of the highest in the OECD \citep{oecd_2020}. Related to this, wage profiles in the Netherlands are relatively steep, as the ratio of wages of older workers to the wages of younger workers is particularly high in the Netherlands \citep{oecd_2014}. At the SRA, employment protection ends, and hence there is an important discontinuity there. Furthermore, more than 90 percent of open-ended labor contracts have mandatory retirement at the SRA \citep[92\% in 2014, according to the][]{oecd_2014}. When workers want to continue working beyond the SRA, their employer has to draft a new contract under new conditions, with transaction costs being another barrier to continued employment.
+
+We explore the importance of demand side factors by comparing the hazard rate of wage earners to the hazard rate of self-employed (defined by their income status at age 60) in Figure \ref{channel_norm}. Since employment protection does not cover the self-employed, we expect smaller bunching for the self-employed. We indeed observe that the hazard rate is three times bigger for wage earners than for self-employed, suggesting that the combination of strict employment protection and mandatory retirement may be an driver of the bunching at the SRA in the Netherlands. 
+
+Appendix Figure \ref{appendix_figure_hazard} provides additional results suggestive of an important role for the demand side in shaping the hazard rate at the SRA. Figure \ref{appendix_figure_hazard1} shows that hazard rates at the SRA are higher for workers in sectors where the pre-retirement wage profiles are steeper, and hence there is a stronger incentive for employers to send workers into retirement.\footnote{Note that this is also consistent with the model of \cite{lazear1979there} that can explain why we need mandatory retirement. There is an ongoing debate in the Netherlands on the pros and cons of abolishing mandatory retirement.} Figure \ref{appendix_figure_hazard2} further shows that the hazard rate increased relatively more in sectors that were more severely hit during the Great Recession in the late 2000s/early 2010s, consistent with employers being more strict in applying mandatory retirement -- or more reluctant in drafting a new contract after the SRA -- when they need to downsize their workforce.
+
+\paragraph{Norms} The final channel we consider are norms and framing effects, which also potentially play an important role in the bunching of retirement at the SRA \citep{behaghel_framing_2012, lalive2019raising, seibold2019reference}. In our setting, the residual bunching we observe for the self-employed suggests that norm effects are indeed also important. If we consider that all the norm effects are measured by the bunching observed for self-employed, we can conclude that they are not a big driver of bunching, compared to employers' effects working via automatic job termination and employment protection. However, we cannot directly interpret the difference in bunching between the two groups as a pure employer side effect, as it can also be due to group-specific norms or framing effects. The employers' effect discussed above can indeed be a mix of employer driven retirement effects and workplace norms effects.
+
+\section{Conclusion} 
+
+% Quick summary
+In this paper we have analyzed the effects of the increase in the Dutch retirement age on employment and the use of social insurance of older workers. We used an RD approach and rich administrative data on the universe of the Dutch population. We find that between the reform decreased the share of individuals in retirement between the old and the new retirement age by 60 percentage points. Close to one third (21 percentage points) of these individuals are employed, whereas also close to one third (22 percentage points) are in social insurance (disability insurance in particular). We find virtually no evidence of upstream effects before the old SRA, or downstream effects after the new SRA. Furthermore, we also found hardly any active substitution into social insurance between the old and the new SRA. Indeed, a mechanical model that simply extrapolates the shares of individuals in the different labor market states to the ages between the old and new SRA predicted the estimated treatment effects very well. %The mechanical model also explained why we find a relatively low employment effect of the SRA shifts for cohorts born before 1950 -- many of which could still make use of generous early retirement schemes -- and a much larger effect for cohorts born after 1949 -- who were no longer eligible to the generous early retirement schemes. 
+We further showed that the reform led to substantial savings for the Dutch government, also after accounting for (mostly mechanical) substitution into social insurance.
+
+The bunching into retirement appears to have shifted almost one-for-one with the SRA. We have shown that the two key elements that determine the bunching at the SRA are: i) the pre-SRA employment rate, and ii) the retirement hazard rate at the SRA. Decomposing the bunching into these two elements helps to reconcile the wide range of findings in the quasi-experimental literature on (early) retirement reforms. The differences in the estimated treatment effects are driven by the amount of bunching in retirement behavior. The relatively strong effect we find in the Dutch case -- for the cohorts born after 1949 -- results mostly from a large hazard rate at the SRA (the pre-SRA employment rate is relatively low). We have considered the potential role of different channels that may cause this high hazard rate. Demand side factors related to strict employment protection and mandatory retirement in combinations with norms and framing effects seem to play a key role in the hazard into retirement.   
+
+% Policy implications
+Several policy implications can be derived from these results. So far, it seems that the increases in the SRA have been beneficial in terms of the sustainability of public finances. We also see that the effectiveness of raising the SRA increased after early retirement became less generous. Hence, there appear to be important interaction effects of early retirement reform and statutory retirement reform. More generally speaking, the effectiveness of retirement policies largely depends on their interaction with other determinants of the employment of older workers, e.g the generosity and entry conditions of unemployment and disability insurance.  However, we should note that these results may only hold true up until a certain age. Even though life expectancy of individuals is increasing, after a certain point individuals may simply not be able to work due to, for example, health related reasons. 
+
+% Future research
+The effects of further increases in the SRA will also depend on the role of this age in shaping retirement behavior in the future. The different potential determinants of the bunching at the SRA -- financial incentives, liquidity constraints, demand side effects and norms may not be constant over time. A better understanding of the relative importance of these channels remains an interesting direction for future research. 
+
+
+%\clearpage
+%\bibliographystyle{plain}
+\bibliography{bib5}
+\newpage
+\appendix
+
+\section{Computation of the effect on the average retirement age}\label{average_appendix}
+
+\setcounter{table}{0}
+\setcounter{equation}{0}
+\setcounter{figure}{0}
+\renewcommand{\thefigure}{A.\arabic{figure}}
+\renewcommand{\thetable}{A.\arabic{table}}
+\renewcommand{\theequation}{A.\arabic{equation}}
+
+
+This appendix describes the computation of the effect of the reform on the average retirement age. We use the coefficients estimated in the regression discontinuity models presented in subsection \ref{sec_strategy}:	
+\begin{equation}
+	\label{eq_A1}
+	y_{ia}^c = \alpha_{ca}   + \beta_{ca}  T_{i} + \gamma_ja f(Z_{i} - c_c)  + \delta_ca f(Z_{i} - c_c) T_{i} + \eta X_{ia} + \epsilon_{ia}
+\end{equation}
+
+The RD coefficients we are interested in are the $\beta_{ca}$ coefficients. They give, a given outcome $y$, the effect of the increase in the SRA for a given monthly age $a$ and for a given cutoff $c$, for the treated group (with SRA increase) relative to the control group (no SRA increase)
+
+Using employment as the $y$ variable $\beta_{ca}$ coefficients measure the effect of the reform on the probability to be employed, and can be interpreted as follows: with the reform, the probability be employed at age $a$, i.e to retire later than age $a$, is $\beta_{ca}$  bigger. Formally, if we note $X_R$ the random variable of the observed retirement age for the control cohort (on the left-side of the cutoff  $j$) and $X_R^{cf}$ the counterfactual one absent the reform: 
+
+\begin{equation}
+	\label{eq_A2}
+	P[X_R > a] = P[X_R^{cf} > a] + \beta_a 
+\end{equation}
+
+The effect of the reform on the average retirement age can be defined as the difference between the observed average retirement age and the counterfactual one, absent the reform \footnote{The following calculation are inspired by \cite{mastrobuoni_labor_2009} (eq (4) in p. 1229)).}, using monthly age in the sum.
+
+\begin{align*}
+	\Delta_c & =   \sum_{a = 720}^{798} a P[X_C = a] - \sum_{a = 720}^{798} a P[X_C^{cf} = a] \\
+	& =\sum_{a = 720}^{798} a ( P[X_R = a] - P[X_R^{cf} = a]) \\
+	& = \sum_{a = 720}^{798} a ( P[X_R >  a -1] - P[X_R^{cf}  > a-1] - P[X_R > a ] + P[X_R^{cf} > a]) \\
+	& = \sum_{a = 720}^{798} a ( \beta_{a-1} - \beta_{a}) 
+\end{align*}
+
+The third step of the computation is obtained from the following property of the CDF : $P[X =  x] = P[X > a-1] - P[X > a] $. The last steps directly comes from equation \ref{eq_A2}. This expression can be simplified if there is an age $a_{min}$ (resp. $a_{max}$) below (resp. above) which there is no effect of the reform (i.e $\beta_{a,c} = 0 $ for $a \leq a_{min}$ or $a \geq a_{max}$  )
+
+\begin{align*}
+	\Delta_c & = \sum_{a = a_{min}}^{a_{max}} a ( \beta_{a} - \beta_{a-1}) \\
+	& = a_{min}  (0 - \beta_{a_{min}}) + (a_{min}+1)  (\beta_{a_{min}} - \beta_{a_{min}+1} ) + ...  + a_{max}  (\beta_{a_{max}-1} - 0 ) \\
+	&  = \sum_{a = a_{min}}^{a_{max}-1}  \beta_{a} 
+\end{align*}
+
+We can than compute the effect on the reform on the average retirement age as the sum of the $\beta$ coefficients estimated for a given cutoff. 
+
+\clearpage
+
+
+\newgeometry{margin = 1in}
+\section{Effect of the ERA reform}\label{appendix_era}
+
+\setcounter{table}{0}
+\setcounter{equation}{0}
+\setcounter{figure}{0}
+\renewcommand{\thefigure}{B.\arabic{figure}}
+\renewcommand{\thetable}{B.\arabic{table}}
+\renewcommand{\theequation}{B.\arabic{equation}}
+
+The focus of the main text is on the effects of the SRA reforms. We find that the effects of the SRA reforms are much larger for cohorts that were directly affected by the ERA reform of 2006 than for cohorts that were (largely\footnote{They were not directly affected by the ERA reform, but they were to some extent affected by the introduction of the Life Course Savings scheme, as discussed below \citep[also see][]{lindeboom_montizaan_2020}.}) unaffected by the ERA reform of 2006. In this appendix we briefly consider the main elements of the ERA reform of 2006, and show that this reform had a large effect on retirement and employment after the age of 60 \citep[for earlier analyses of this reform see e.g.][]{de_grip_et_al_2012, lindeboom_montizaan_2020}. 
+
+\paragraph{Description of the 2006 ERA reforms} The ERA reform package was announced in 2005 and came into effect on January 1, 2006. The reform package resulted in lower early retirement benefits and early retirement benefits that were more actuarially fair for cohorts born after December 1949. Early retirement benefits for cohorts before January 1950 were unaffected.\footnote{\cite{lindeboom_montizaan_2020} provide examples of public pension wealth for cohorts born in 1949 and 1950 at different potential retirement ages.} In the same reform, the government also introduced the \textit{Levensloopregeling} (Life Course Savings scheme), which allows for tax-free saving up to 12\% of annual earnings, which can be used to retire early (or to take leave for raising children or a sabbatical). Individuals could use this scheme to partly offset the reduction in early retirement benefits. However, all cohorts could participate in this scheme, though cohorts born in 1950--1954 were allowed to save more than 12\% into this scheme (up to a maximum of 210\% of annual earnings for all cohorts). Overall, financial incentives to postpone retirement we substantially increased for cohorts born after December 1949, though tax-favored savings scheme may have promoted some earlier retirement for cohorts born before January 1950 \citep[see also][]{lindeboom_montizaan_2020}.  
+
+\paragraph{Effects of the ERA reforms}
+
+The ERA reforms had an important impact on employment and retirement behaviors. Figure \ref{RD_average_era} first presents the effect of the reform on the average retirement age. We see a large jump at the 1950 discontinuity, with an estimated increase of 5.2 months in the average retirement age.\footnote{We estimate equation (\ref{eq_RD_gen}) with January 1950 as a cutoff and the retirement age as left-handside variable.} This is a much larger effect than the SRA jumps we study (maximum of 1 month increase in the average retirement age for the 4 months increase in the SRA, cf. Table \ref{table_average_cutoff} in the main text).  
+
+Figure \ref{fullRD_era} shows the results from RDD analyses at different age levels for cohorts born in 1949 (control cohorts) and 1950 (treated cohorts).\footnote{We estimate equation (\ref{eq_RD_age}) with January 1950 as a cutoff and labor force status as the dependent variable.} Panel (a) shows that cohorts born after 1949 are much more likely to work between the age of 60 and the SRA, and the share in employment increases by about 10pp at the age of 64. Conversely, Panel (a) shows that cohorts born after 1949 are much less likely to retire between the age of 60 and the SRA than cohorts born before 1950, and the difference increases between the age of 60 and 64, with the share in retirement dropping by some 12pp at the age of 64. This is roughly consistent with the findings of \cite{lindeboom_montizaan_2020} for public sector workers.
+The reform thus largely increased employment and decreased retirement before age 65. More precisely, it induced many workers who previously retired before the SRA to retire exactly at the SRA. This is illustrated in Figure \ref{evo_distribution_era}, which presents the distribution of retirement age for the control and treatment group. We observe a large decrease in all the retirement mass points before 65, while the bunching in retirement at the SRA almost doubles. 
+
+\begin{figure}[!t]
+	\centering
+	\begin{adjustwidth}{-0.5in}{-0.5in}
+		\centering
+		\caption{Effect of ERA increase on the average retirement age}
+		\label{RD_average_era}
+		\includegraphics[scale = 0.5]{figures/era2.pdf}
+	\end{adjustwidth}
+	\begin{minipage}{14cm}%
+		\scriptsize
+		\textsc{Note:} 
+	\end{minipage}%
+\end{figure}
+
+\begin{figure}[p]
+	\centering
+	\begin{adjustwidth}{-0.5in}{-0.5in}
+		\caption{Effect of ERA increase on employment and retirement rate, by age}
+		\label{fullRD_era}
+			\centering
+		\includegraphics[scale = 0.5]{figures/era1.pdf}
+	\end{adjustwidth}
+	
+	\begin{minipage}{14cm}%
+		\scriptsize
+		\textsc{Note:} 
+	\end{minipage}%
+\end{figure}
+
+\begin{figure}[p]
+	\centering
+	\begin{adjustwidth}{-0.5in}{-0.5in}
+		\centering
+		\caption{Effect of ERA increase on the distribution of retirement age}
+		\label{evo_distribution_era}
+		\includegraphics[scale = 0.6]{figures/evo_distribution2.pdf}
+	\end{adjustwidth}
+	
+	\begin{minipage}{14cm}%
+		\scriptsize
+		\textsc{Note:} 
+	\end{minipage}%
+\end{figure}
+
+\clearpage
+
+
+%\setcounter{table}{0}
+%\setcounter{equation}{0}
+%\setcounter{figure}{0}
+%\renewcommand{\thefigure}{C.\arabic{figure}}
+%\renewcommand{\thetable}{C.\arabic{table}}
+%\renewcommand{\theequation}{C.\arabic{equation}}
+
+%\section{Additional Tables and Figures}\label{appendix_additional_tables}
+
+\resetfootnote
+\section*{Supplementary material for online appendix}\label{online_appendix}
+
+\setcounter{table}{0}
+\setcounter{equation}{0}
+\setcounter{figure}{0}
+\renewcommand{\thefigure}{A.\arabic{figure}}
+\renewcommand{\thetable}{A.\arabic{table}}
+\renewcommand{\theequation}{A.\arabic{equation}}
+
+
+\subsection*{A. Additional Figures and Tables for online appendix}\label{appendix_new_plots_tables}
+
+
+
+
+%%% Figures
+\begin{sidewaystable}[htp!]
+	\begin{adjustwidth}{-0.0in}{-0.0in}	
+	\caption{Descriptive statistics for the different estimation samples}
+	\scriptsize
+	\label{sample_description}
+	% Table
+	\begin{tabular}{lcccccccc|cc}
+	\toprule
+\textbf{Estimation sample}	& $C_1$ & $T_1$ and $C_2$ & $T_2$ & $C_3$  & $T_3$ and $C_4$ &  $T_4$ and $C_5$ & $T_5$ and $C_6$ & $T_6$ & $C_{pooled}& $T_{pooled}\\\
+\textbf{SRA}	& 65y & 65y + 1 m & 65y + 2 m& 65y + 3 m & 65 y + 6 m& 65y + 9 m& 66y & 66y + 4 m  &  65y+3m to  65y+9m &  65y+6 m to  66y\\
+	\midrule
+	\input{tables/sample_description.tex}
+	\end{tabular}
+	\hspace*{-1cm}	
+
+		\begin{minipage}{22cm}%
+     \scriptsize
+			\textsc{Note:} This Table presents general descriptive statistics for the different estimation samples used in the analysis. $C_g$ and $T_g$ respectively refers to the control (left side of the discontinuity) and treatment group (right side of the discontinuity) for the estimation sample $g$.  See section \ref{sec_strategy} for details on the construction of the estimation samples. 
+		\end{minipage}%
+	\normalsize
+\end{adjustwidth}
+\end{sidewaystable}
+
+
+\vspace{0.2cm}
+\begin{figure}[H]
+	\caption{Distribution of the number of births data by year}
+	\label{fig_nb_birth}
+	\centering
+	\begin{subfigure}{.5\textwidth}
+		\centering
+		\caption{Births by month of birth}
+		\includegraphics[width=\linewidth]{figures/nb_birth1.pdf} %
+		\label{fig_nb_birth1}
+	\end{subfigure}%
+	\begin{subfigure}{.5\textwidth}
+		\centering
+		\caption{Births by distance to the SRA reform}
+		\includegraphics[width=\linewidth]{figures/nb_birth2.pdf} 	
+		\label{fig_nb_birth2}
+	\end{subfigure}
+	\begin{minipage}{15cm}%
+		\footnotesize
+		\small \textsc{Note:} Panel (a) presents the number of births recorded by date of birth, broken down by migration status (born in the Netherlands, first and second generation migrants). Panel (b) presents the number of birth by distance to the SRA change for the pooled estimation sample (see section \ref{sec_strategy} for description of estimation samples). 
+	\end{minipage}%
+\end{figure}
+
+\vspace{0.2cm}
+\begin{figure}[H]
+	\caption{Balancing tests for the different estimation samples}
+	\label{fig_rd_balancing}
+	\centering
+	\includegraphics[scale=0.7]{figures/rd_balancing.pdf} %
+	\begin{minipage}{16cm}%
+		\footnotesize
+		\small \textsc{Note:} This Figure presents the $\beta$ coefficients from the estimation of \ref{eq_RD_gen} for our different estimation samples and for pre-treatment variables we do not expect to be affected by the reforms of interest. Lines around the point estimates present the 95\% confidence intervals. 
+	\end{minipage}%
+\end{figure}
+
+
+
+\begin{figure}[H]
+\begin{adjustwidth}{-1in}{-1in}	
+\caption{Full RD for pooled sample: sensitivity analysis}
+\label{full_RD_robustness}
+\centering
+\includegraphics[scale = 0.65]{figures/full_RD_robustness.pdf}
+\end{adjustwidth}
+\begin{minipage}{15cm}%
+\footnotesize
+	\textsc{Notes:} 
+\end{minipage}%
+\end{figure}
+
+
+\begin{figure}[H]
+\begin{adjustwidth}{-1in}{-1in}	
+\caption{Full RD for pooled sample: breakdown by cohort}
+\label{full_RD_cohort}
+\centering
+\includegraphics[scale = 0.75]{figures/full_RD_cutoff_pooled.pdf}
+\end{adjustwidth}
+\begin{minipage}{15cm}%
+\footnotesize
+	\textsc{Notes:} 
+\end{minipage}%
+\end{figure}
+
+%%% Tables 
+\begin{comment}
+    \begin{table}[H]	
+	\caption{Full table for main analysis}
+	\footnotesize
+	\label{table_RD_full}
+	% Results
+	\begin{adjustbox}{max width = \textwidth, max totalheight=.7\textheight, keepaspectratio}
+		\hspace*{-1cm}
+		% Table
+		\input{tables/rd_all.tex}
+		\hspace*{-1cm}
+	\end{adjustbox}
+	\vspace*{0.2cm}
+	% Notes
+	\scriptsize
+	\begin{tabular}{ll}
+		\begin{minipage}{15cm}%
+		%	\textsc{Notes:} .  
+		\end{minipage}%
+	\end{tabular}
+	\normalsize
+\end{table}
+\end{comment}
+
+
+%%% Table for robustness
+\begin{table}[H]	
+	\caption{Full table for robustness analysis}
+	\footnotesize
+	\label{table_RD_robustness}
+	% Results
+	\begin{adjustbox}{max width = \textwidth, max totalheight=.7\textheight, keepaspectratio}
+		\hspace*{-1cm}
+		% Table
+		\input{tables/rd_robustness.tex}
+		\hspace*{-1cm}
+	\end{adjustbox}
+	\vspace*{0.2cm}
+	% Notes
+	\scriptsize
+	\begin{tabular}{ll}
+		\begin{minipage}{15cm}%
+	    \textsc{Notes:} This Table presents the point estimates presented in Figure \ref{fig_robustness}. It shows the treatment effect estimated with a range of alternative specifications. See main text for a description of the different models. 
+		\end{minipage}%
+	\end{tabular}
+	\normalsize
+\end{table}
+
+
+\begin{table}[H]	
+	\caption{Full table for RD on the average retirement age}
+	\footnotesize
+	\label{table_RD_average}
+	% Results
+	\begin{adjustbox}{max width = \textwidth, max totalheight=.7\textheight, keepaspectratio}
+		\hspace*{-1cm}
+		% Table
+		\input{tables/rd_average.tex}
+		\hspace*{-1cm}
+	\end{adjustbox}
+	\vspace*{0.2cm}
+	% Notes
+	\scriptsize
+	\begin{tabular}{ll}
+		\begin{minipage}{15cm}%
+		%	\textsc{Notes:} . 
+		\end{minipage}%
+	\end{tabular}
+	\normalsize
+\end{table}
+
+
+
+\begin{figure}[H]
+\begin{adjustwidth}{-1in}{-1in}	
+\caption{Labor force status by age and SRA cohort: alternative definition with non exclusive states}
+\label{RD_plot_non_exclusive}
+\centering
+\includegraphics[scale = 0.65]{figures/evo_workstate_non_exclusive.pdf}
+\end{adjustwidth}
+\begin{minipage}{15cm}%
+	\textsc{Notes:} 
+\end{minipage}%
+\end{figure}
+
+\begin{comment}
+\begin{figure}[H]
+\begin{adjustwidth}{-1in}{-1in}	
+\caption{Amounts by age and SRA cohort, for different source of income}
+\label{DD_plot_amount}
+\centering
+\includegraphics[scale = 0.65]{figures/evo_workstate_amount.pdf}
+\end{adjustwidth}
+\begin{minipage}{15cm}%
+\footnotesize
+	\textsc{Notes:} 
+\end{minipage}%
+\end{figure}
+\end{comment}
+
+
+
+\begin{figure}[H]
+\begin{adjustwidth}{-1in}{-1in}	
+\caption{Full RD for fiscal effects}
+\label{full_RD_amount}
+\centering
+\includegraphics[scale = 0.65]{figures/full_RD_amount.pdf}
+\end{adjustwidth}
+\begin{minipage}{15cm}%
+	\textsc{Notes:} 
+\end{minipage}%
+\end{figure}
+
+
+
+
+\begin{comment}
+\begin{figure}[H]
+\begin{adjustwidth}{-1in}{-1in}	
+\caption{Full RD for substitution effect: employed at 60}
+\label{full_RD_substitution60}
+\centering
+\includegraphics[scale = 0.65]{figures/full_RD_substitution_60.pdf}
+\end{adjustwidth}
+\begin{minipage}{15cm}%
+	\textsc{Notes:} 
+\end{minipage}%
+\end{figure}
+
+\begin{figure}[H]
+\begin{adjustwidth}{-1in}{-1in}	
+\caption{Full RD for substitution effect: employed at 65}
+\label{full_RD_substitution65}
+\centering
+\includegraphics[scale = 0.65]{figures/full_RD_substitution_64.pdf}
+\end{adjustwidth}
+\begin{minipage}{15cm}%
+	\textsc{Notes:} 
+\end{minipage}%
+\end{figure}
+\end{comment}
+
+
+
+\begin{comment}
+\vspace{0.2cm}
+\begin{figure}[H]
+	\caption{RD estimation and effect on average retirement age for a subsample of individuals still working at age 58}
+	\label{fig_rd_full_average_sub}
+	\centering
+	\includegraphics[scale=0.6]{figures/rd_full_average_sub.pdf} %
+	\label{fig_nb_birth1}
+
+	\begin{minipage}{15cm}%
+		\footnotesize
+		\small \textsc{Note:} 
+	\end{minipage}%
+\end{figure}
+
+
+\begin{figure}[H]
+	\begin{adjustwidth}{-1in}{-1in}	
+\caption{Local linear regression plots for employment and retirement}
+\label{rd_plot_cutoff}
+\centering
+\includegraphics[scale = 0.65]{figures/rd_plot_cutoff.pdf}
+\end{adjustwidth}
+\end{figure}
+\end{comment}
+
+
+\vspace{.2cm}
+\begin{figure}[H]
+	\caption{Hazard rate at the SRA by sector's characteristics}
+	\label{appendix_figure_hazard}
+	\centering
+	\begin{subfigure}{1\textwidth}
+		\centering
+		\caption{Hazard rate vs. steepness of the wage profile}
+		\includegraphics[width=.75\linewidth]{figures/hazard_sector_1} %
+		\label{appendix_figure_hazard1}
+  \begin{minipage}{0.9\textwidth}
+  \footnotesize
+  This figure compares the hazard rate at the SRA (y axis) to the steepness of the wage profile (x axis) by sector. Both values are computed using individuals born between 1950 and 1955. Hazard rate is computed as the probability to retire at the SRA conditionally on being employed until this point. Wage profiles are computed as the yearly increase in total earnings, when individuals are between 57 and 62 of age. 
+\vspace*{0.3cm}
+  \end{minipage}
+	\end{subfigure}
+	\begin{subfigure}{1\textwidth}
+		\centering
+		\caption{Hazard rate vs. impact of the 2010s crisis}
+		\includegraphics[width=.75\linewidth]{figures/hazard_sector_2} 	
+		\label{appendix_figure_hazard2}
+    \begin{minipage}{0.9\textwidth}
+  \footnotesize
+  This figure compares change in the hazard rate at the SRA (y axis) to the impact of the 2010s economic crisis (x axis) by sector. The change in the hazard rate by sector is computed as the difference between the hazard rate observed before the crisis (years 2007-2009) and at the peak of the crisis (years 2007-2009). The impact of the crisis is computed as the \% change in the total number of workers below age 55 by sector, between those two periods. 
+\vspace*{0.3cm}
+  \end{minipage}
+	\end{subfigure}
+\end{figure}
+
+
+
+\begin{table}[h]
+	\begin{adjustwidth}{-0.25in}{-0.25in}	
+	\scriptsize
+	\caption{Comparison with related studies looking at average retirement age$^a$}
+	\label{comparison_ave}
+	\begin{tabular}{lclc ccc}		
+		
+		\toprule
+		
+		\textbf{Study} & \textbf{Country} & \multicolumn{1}{l}{\textbf{Reform}} & \multicolumn{1}{c}{\textbf{Method}}   &  \multicolumn{2}{c}{\textbf{Results}} \\	
+		&                             &              &                 &   Ave. retirement age per & Ave. claiming age per \\
+		&                             &              &                 &   month ERA/NRA/SRA$^b$ & month ERA/NRA/SRA$^c$ \\
+		\midrule
+		
+		%%% Mastrobuoni
+		Mastrobuoni (2009) &
+		% Reform 
+		USA &  NRA 62 $\rightarrow$ 65 & 
+		% Method 
+                     RKD &
+		% Results
+		\male: +0.8, \female: +0.6 & $\times$ \\
+		
+		%%% Manoli Weber
+		Manoli \& Weber (2018) &
+		% Reform men
+		AUT & \male: ERA 60 $\rightarrow$ 62.5 &  
+		% Method 
+                     RDD, & 
+		% Results
+		+0.20 to +0.36 & +0.49 to +0.54 \\
+		% Reform women
+		& & \female: ERA 55 $\rightarrow$ 58.5 &  
+		% Method 
+		RKD &  
+		% Results
+		+0.39 to +0.55 & +0.54 to +1.03 \\
+		
+		%%% Lalive et al
+		Lalive et al. (2019) & 
+		% Reform 
+		SWI & \female: FRA 62 $\rightarrow$ 64 & 
+		% Method 
+		RDD &
+		% Results
+		+0.41 to +0.65 & +0.69 to +0.72\\
+		
+		%%% Atav et al
+		\textbf{PM Adjust: This paper} &  %SPLIT GENDER
+		% Reform 
+		NLD & More generous ER$^d$  \\
+                            & & SRA 65 $\rightarrow$ 65+2m & RDD & +0.02 to +0.06  & +0.11 to +0.12 \\ 
+		  & & Less generous ER$^e$ \\
+                         & & SRA 65+3m $\rightarrow$ 66+4m  & RDD & +0.13 to +0.17 & +0.21 to +0.23  \\ 	
+		%NLD & Generous ER \\
+		%& & NRA 65 $\rightarrow$ 65+1m & RDD & PM & PM \\ 
+		%& & NRA 65+1m $\rightarrow$ 65+2m & RDD & PM & PM \\ 
+		%& & Less generous ER \\
+		%& & NRA 65+3m $\rightarrow$ 65+6m & RDD & PM & PM \\ 
+		%& & NRA 65+6m $\rightarrow$ 65+9m & RDD & PM & PM \\ 
+		%& & NRA 65+9m $\rightarrow$ 66 & RDD & PM & PM \\ 
+		%& & NRA 66 $\rightarrow$ 66+3m & RDD & PM & PM \\ 
+		
+		\bottomrule		
+	\end{tabular}
+\begin{minipage}{18cm}%
+	\textsc{Notes:} $^a$Exact references for the values reported in this table can be found in Table \ref{comparison_ave_exact_references} in the online appendix. $^b$The increase in the average retirement age per month increase in the ERA, NRA or SRA. $^c$The increase in the average claiming age of retirement benefits per month increase in the ERA, NRA or SRA. $^d$Min and max for cutoff 1 and 2 in Table \ref{table_average}. $^e$Min and max for cutoff 3 and 6 in Table \ref{table_average}.
+\end{minipage}%
+\vspace{-2cm}
+\end{adjustwidth}
+\end{table}
+
+
+
+\begin{sidewaystable}
+	
+	%\begin{table}
+		\footnotesize
+		\caption{Exact references outcomes related studies in Table \ref{comparison}}
+		\label{comparison_exact_references}
+		\begin{tabular}{lccc cc ccc}		
+		
+			\toprule
+			
+			\textbf{Study} & \multicolumn{2}{c}{\textbf{Results}} &  \multicolumn{3}{c}{\textbf{At ERA, NRA or SRA}} \\	
+			
+			& Employment rate & Retirement rate & Employment rate & Hazard rate & Bunching \\
+			\midrule
+			
+			%%% Staubli and Zweimuller
+			Staubli \&  & 
+			% Results men
+			\male: Table 3, column (2) & Table 3, column (2) &
+			% Pre-reform levels men (source: Figure 4)
+			\multicolumn{3}{c}{Figure 4 (A)} \\ 
+			
+			% Results women
+			Zweimüller (2013) & \female: Table 3, column (6) & Table 3, column (6) &
+			% Pre-reform levels women (source: Figure 5)
+			\multicolumn{3}{c}{Figure 5 (A)} \\ 
+			
+			%%% Vestad
+			Vestad (2013) & 
+			% Results men
+			Table 2, column 'DD estimate' & $\times$ &
+			% Pre-reform levels men (source: Figure 4)
+			\multicolumn{3}{c}{Figure 2} \\ 
+			
+			%%% atalay_impact_2015 .
+			% Reform
+			Atalay \& Barrett (2015) & 
+			% Results men
+			Table 3, column 'Full Sample' & $\times$ &
+			% Pre-reform levels men (source: Figure 4)
+			\multicolumn{3}{c}{\male: Figure 2, at age 60} \\ 
+
+			%%% cribb_et_al_2015
+			Cribb et al. (2016) &
+			% Results
+			Table 4 & Table 5, "Retired" &
+			% Pre-reform levels (source: Figure 2 and 4)
+			\multicolumn{3}{c}{Figure 2, age 59} \\ 
+
+			%%% de_vos_et_al_2019
+			% Reform
+			De Vos et al. (2019) & 
+			% Results
+			\textbf{Page 22} & $\times$ &  
+			% Prereform level 
+			\multicolumn{3}{c}{Figure 12} \\
+
+			%%% Rabate Rochut 2019
+			%Reform
+			Rabaté \& Rochut (2019) & 
+			% Results
+			Table 5, column 'Employment' & Table 5, column 'Retirement' &  
+			% Prereform level 
+			\multicolumn{3}{c}{Figure 2 (a)} \\
+
+			%%% Geyer Welteke 2021
+			Geyer \& Welteke (2021) &
+			% Results
+			Table 1, column (1) & Table 1, column (5) &
+			% Pre-reform levels (source: Figure 2 and 4)
+			Figure 2 (A) & Figure 4 & Figure 4 \\ 
+						
+			%%% Atav et al
+			\textbf{PM Adjust: This paper} & More generous ER \\
+			% Results
+			& Table \ref{table_RD_cutoffs} & Table \ref{table_RD_cutoffs}  &
+			% Pre-reform levels
+			Figure \ref{workstate} & Figure \ref{workstate} & Figure \ref{workstate} \\ 
+			% Results
+			& Less generous ER & \\
+                                & Table \ref{table_RD_cutoffs} & Table \ref{table_RD_cutoffs}  &
+			% Pre-reform levels
+			Figure \ref{workstate} & Figure \ref{workstate} & Figure \ref{workstate} \\ 
+
+			\bottomrule
+		\end{tabular}
+	%\end{table}	
+\end{sidewaystable}
+\clearpage
+
+\begin{sidewaystable}
+	%\begin{table}
+		\footnotesize
+		\caption{Exact references outcomes related studies in Table \ref{comparison_ave}}
+		\label{comparison_ave_exact_references}
+		\begin{tabular}{lccc}		
+		
+			\toprule
+			
+			\textbf{Study} & \multicolumn{2}{c}{\textbf{Results}} \\	
+			
+			&               Ave. retirement age & Ave. claiming age \\
+			\midrule
+			
+			%%% Mastrobuoni
+			Mastorbuoni (2009) &
+			% Results
+			\male: Table 5, column (2), \female: Table 5, column (2) &  $\times$ \\
+			 
+			%%% Manoli Weber
+			Manoli \& Weber (2018) &
+			% Reform men
+			% Results
+			\male: Table 4, 'Short contribution years' & Table 4, 'Short contribution years' \\
+			& \female: Table 4, 'Short contribution years' & Table 4, 'Short contribution years' \\
+
+			%%% Lalive et al
+			Lalive et al. (2020) & 
+			% Results
+			Table 4, columns (1) and (3), panel C & Table 4, columns (1) and (3), panel A \\
+
+			%%% Atav et al
+			\textbf{PM Adjust: This paper} & More generous ER \\
+			% Results
+			& Table \ref{table_average} & Table \ref{table_average} & \\
+			& Less generous ER \\
+			% Results
+			& Table \ref{table_average} & Table \ref{table_average} & \\
+
+			\bottomrule		
+		\end{tabular}
+	%\end{table}	
+\end{sidewaystable}
+
+\clearpage
+\subsection*{B. Data description}\label{online_appendix_data}
+\setcounter{table}{0}
+\setcounter{equation}{0}
+\setcounter{figure}{0}
+\renewcommand{\thefigure}{B.\arabic{figure}}
+\renewcommand{\thetable}{B.\arabic{table}}
+\renewcommand{\theequation}{B.\arabic{equation}}
+
+
+
+
+
+
+We hereby present the different dataset we used in this analyses. Table \ref{data_version} below present the version of the files we use. 
+
+
+\subsubsection*{gbapersoontab\footnote{\hyperlink{ https://www.cbs.nl/nl-nl/onze-diensten/maatwerk-en-microdata/microdata-zelf-onderzoek-doen/microdatabestanden/gbapersoontab-persoonskenmerken-van-personen-in-de-brp}{Link to gbapersoontab documentation in Dutch}}}
+
+It contains demographic background data (e.g. gender, year of birth, migration background) for the universe of the Dutch population, that is  all persons who appear in the registered in the population register (Basic Register of Persons, BRP) since 1 October 1994. 
+
+\subsubsection*{gbaoverlijdentab\footnote{\hyperlink{ https://www.cbs.nl/nl-nl/onze-diensten/maatwerk-en-microdata/microdata-zelf-onderzoek-doen/microdatabestanden/gbaoverlijdentab-datum-van-overlijden-van-personen-die-ingeschreven-staan-in-de-gba}{Link to gbaoverlijdentab documentation in Dutch}}}
+
+Contains the date of death of all persons who have died since 1 October 1994 and were registered in the population register (Basic Register of Persons, BRP) at the time of death. It also contains the date of death of persons who are not residents but were once residents of the Netherlands since 1 October 1994 and whose information about the death is received in the Register of Non-Residents (RNI). The main source of information for this dataset is the municipal registries (Gemeentelijke Basisadministratie Persoonsgegevens, GBA).
+
+
+\subsubsection*{gbamigratiebus\footnote{\hyperlink{ https://www.cbs.nl/nl-nl/onze-diensten/maatwerk-en-microdata/microdata-zelf-onderzoek-doen/microdatabestanden/gbamigratiebus-migratiekenmerken-van-personen}{Link to gbamigratiebus documentation in Dutch}}}
+
+It contains all migration spells for the full universe of the Dutch population (as defined in the gbapersoontab). For each immigration (resp. emigration) spell, a date of beginning and end is registered, as well as the country of origin (resp. destination). For each individual, we have as many spells as migration events occurring since 1994. The main source of information for this dataset is the municipal registries (Gemeentelijke Basisadministratie Persoonsgegevens, GBA).
+
+\subsubsection*{gbahuishoudensbus\footnote{\hyperlink{ https://www.cbs.nl/nl-nl/onze-diensten/maatwerk-en-microdata/microdata-zelf-onderzoek-doen/microdatabestanden/gbahuishoudensbus-huishoudenskenmerken}{Link to gbahuishoudensbus documentation in Dutch}}}
+
+For the full universe of the Dutch population (as defined in the gbapersoontab), it contains information about the household composition: their place in the household, and the details of the household they belong to (e.g couple or not, married or not, with or without children, etc.). Retrospective information is available, as the data is presented as spells (one additional line when one characteristic of the household changes). The main source of information for this dataset is the municipal registries (Gemeentelijke Basisadministratie Persoonsgegevens, GBA).
+
+\subsubsection*{polisbus\footnote{\hyperlink{ https://www.cbs.nl/nl-nl/onze-diensten/maatwerk-en-microdata/microdata-zelf-onderzoek-doen/microdatabestanden/polisbus-polisbus-banen-en-lonen-van-werknemers-in-nederland--opvolger-van-ewl-vanaf-2010-vervangen-door-spolisbus--}{Link to polis documentation in Dutch}} and spolisbus\footnote{\hyperlink{ https://www.cbs.nl/nl-nl/onze-diensten/maatwerk-en-microdata/microdata-zelf-onderzoek-doen/microdatabestanden/spolisbus-banen-en-lonen-volgens-polisadministratie}{Link to spolis documentation in Dutch}}}
+
+It contains information on the full universe of job in the Netherlands, available from year 2006. There is one line by employment spells, with information on both the individual (wage, hours worked, contributions, etc) and the firm (sector, collective agreement, etc). 
+
+\subsubsection*{secm datasets\footnote{\hyperlink{https://www.cbs.nl/nl-nl/onze-diensten/maatwerk-en-microdata/microdata-zelf-onderzoek-doen/microdatabestanden/secmbus-personen-sociaaleconomische-categorie
+		}{Link to secm documentation in Dutch}}}
+
+The secm datasets contain monthly information on the income receive each month from year 1999 for different types of incomes: employment wage (SECMWERKNDGAMNBEDRABUS), profit (SECMZLFMNDBEDRAGBUS), other activities (SECMOVACTMNDBEDRAGBUS), unemployment benefits (SECMWERKLMNDBEDRAGBUS), disability benefits (SECMZIEKTAOMNDBEDRAGBUS), other benefits (SECMSOCVOORZOVMNDBEDRAGBUS) welfare (SECMBIJSTMNDBEDRAGBUS) and pension income (SECMPENSIOENMNDBEDRAGBUS). 
+
+These datasets are constructed by Statistic Netherlands using different administrative data sources (taxes, social security, pension funds). The initial form of the dataset is spell data, and contains a date of beginning, a date of end and an associated monthly amount. A new line is added for a given individual everytime the monthly amount she perceives changes. The secmbus dataset combines the different sources mentioned above in a single dataset containing the main source of income and associated amount for each spell. 
+
+\subsubsection*{vehtab\footnote{\hyperlink{ https://www.cbs.nl/nl-nl/onze-diensten/maatwerk-en-microdata/microdata-zelf-onderzoek-doen/microdatabestanden/vehtab-vermogens-van-huishoudens
+		}{Link to vehtab documentation in Dutch}}}
+
+The vehtab data provide information about the wealth of the full universe of the Dutch household. It is available from year 2006, and contains on a yearly basis the value of asset and debt owned, for different types of wealth (e.g financial assets, business assets, housing). 
+The vehtab data do not cover all wealth in the national accounts, as pension wealth is not included. 
+Depending on the type of wealth, the value is either observed (from tax data) or computed by Statistic Netherlands. 
+
+
+
+\begin{table}[ht!]
+	\caption{Versions of the datasets used in the analyses}
+	\label{data_version}
+	\begin{center} 						
+		\begin{adjustbox}{max width = \textwidth, max totalheight=.9\textheight, keepaspectratio}						
+			\begin{tabular}{lll}	
+				\toprule
+				\textbf{Content}	&	\textbf{Name of dataset}	&	\textbf{Source}	\\
+				\hline					
+				Date of birth and gender	&	GBAPERSOON2019TAB (V1)	&	Population registers	\\
+				Death	&	GBAOVERLIJDENTAB2019TAB (V1) 	&	Death records	\\
+				Migration	&	GBAMIGRATIE2019BUSV2 (V1) 	&	Migration records	\\
+				Households characteristics 	&	GBAHUISHOUDENS2019BUS (V1)	&	SSB	\\
+				AOW benefits	&	AOWUITKERING1ATAB 2007-2020	&	SSB	\\
+		
+
+				Individual income	&		&		\\
+				\ \ Wage income 	&	SECMWERKNDGAMNBEDRABUSV20191	&	SSB	\\
+				\ \ Profits from self-employment 	&	SECMZLFMNDBEDRAGBUSV20191	&	SSB	\\
+				\ \ Income from other activity 	&	SECMOVACTMNDBEDRAGBUSV20191	&	SSB	\\
+				\ \ Social welfare benefits 	&	SECMBIJSTMNDBEDRAGBUSV20191	&	SSB	\\
+				\ \ UI benefits 	&	SECMWERKLMNDBEDRAGBUSV20191	&	SSB	\\
+				\ \ DI and sickness benefits 	&	SECMZIEKTAOMNDBEDRAGBUSV20191	&	SSB	\\
+				\ \ Other social security benefits 	&	SECMSOCVOORZOVMNDBEDRAGBUSV20191	&	SSB	\\
+				\ \ Pension income 	&	SECMPENSIOENMNDBEDRAGBUSV20191	&	SSB	\\
+				Activity sector 	&	POLISBUS 2006-2020	&	SSB	\\				
+				\bottomrule					
+			\end{tabular}						
+		\end{adjustbox}						
+	\end{center}						
+%	\caption*{{\footnotesize  
+	%		\textsc{Note:} SSB stands for \textit{Sociaal Statistisch Bestand} (Social Statistical Database).\\
+	%		\textsc{Source:} CBS microdata catalogue. }}						
+\end{table}						
+
+
+
+
+\end{document}
+
+
